@@ -1,0 +1,26 @@
+.header {
+
+	position: sticky;
+	top: 0;
+	z-index: 999;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 7vh;
+
+}	
+
+.headerOptions,
+.headerStart {
+
+		display: flex;
+		align-items: center;
+
+}
+
+.headerOptions {margin-right: var(--space-xs);}
+
+.headerOptions > * {cursor: pointer;}
+
+.headerStart > a,
+.headerStart > label {margin-left: var(--space-2xs);}

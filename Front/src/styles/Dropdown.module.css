@@ -1,0 +1,57 @@
+.link {
+
+  color: inherit;
+  border: none;
+  background-color: transparent;
+
+}
+
+.dropdown {position: relative;}
+
+.dropdownMenu {
+
+  position: absolute;
+  left: 0;
+  top: calc(100% + .25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: .75rem;
+  border-radius: .25rem;
+  box-shadow: 0 2px 5px 0 #0001;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+
+}
+
+.dropdown.isActive > .link + .dropdownMenu {
+
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+
+}
+
+.dropdownMenu > a {
+
+  position: relative;
+  padding: .5rem 0;
+
+}
+
+.dropdownMenu > a::after {
+
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: .10rem;
+  background-color: var(--main-color);
+  transition: width .5s ease, left .5s ease, right .5s ease;
+
+}
+
+.dropdownMenu > a:hover::after {width: 100%;}

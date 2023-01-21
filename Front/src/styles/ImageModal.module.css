@@ -1,0 +1,85 @@
+
+.modalImgContainer {
+
+	position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: aparecer 2s ease-out forwards;
+
+}
+
+.imageModal {
+
+	width: 100%;
+	object-fit: contain;
+	
+}
+
+.modalOptions {
+
+	position: absolute;
+	bottom: 2%;
+	display: flex;
+	justify-content: space-evenly;
+	width: 100%;
+	max-width: 25rem;
+	padding: var(--space-2xs) 0;
+	border-radius: .25rem;
+	background-color: #12121288;
+	
+	
+}
+
+.modalOption {
+
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+}
+
+.modalOption > * {color: #fff;}
+
+.modalOption > i {font-size: var(--step-0);}
+
+.modalOptions {
+
+		opacity: 0;
+		transition: opacity .2s ease-in-out;
+
+}
+
+.modalOptions:hover {opacity: 1;}
+
+.modalOption > i {font-size: var(--step-2);}
+
+.modalOption:hover > * {color: var(--main-color);}
+
+@keyframes aparecer {
+	
+	0% {
+
+		transform: scale(0%);
+
+	}
+
+	70%{background-color: #0000;}
+
+	80%{background-color: #0002;}
+
+	90%{background-color: #0004;}
+
+	100%{
+
+		background-color: #0005;
+		transform: scale(100%);
+
+	}
+
+}

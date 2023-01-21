@@ -1,0 +1,103 @@
+.editorContainer {
+
+	display: flex;
+	flex-direction: column;
+	height: 93vh;
+
+}
+
+.editorImage {
+
+	height: 80%;
+	max-width: 50rem;
+	max-height: 25rem;
+	margin-top: var(--space-2xs);
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+.editorAside {
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin-top: var(--space-xs);
+	margin-right: auto;
+	margin-left: auto;
+	height: 30%;
+	width: 100vw;
+	max-width: 30rem;
+
+}
+
+.editorButton {
+
+	border: none;
+	outline: none;
+	padding: var(--space-3xs);
+	color: var(--body-color-dark);
+	background-color: var(--second-color);
+
+}
+
+.editorOptions {
+
+	display: block;
+	margin: 0 auto;
+	padding: var(--space-3xs) var(--space-xs);
+	border: none;
+	outline: none;
+	background-color: var(--four-color);
+	
+}
+
+.sidebarItem {
+
+	position: relative;
+	padding: var(--space-2xs);
+	border: none;
+	background-color: var(--four-color);
+	cursor: pointer;
+	outline: none;
+	transition: background-color 150ms;
+
+}
+
+.sidebarItem:hover, .sidebarItem:focus {background-color: var(--third-color);}
+
+.sidebarItem.active {background-color: var(--main-color);}
+
+.sidebarItem::after {
+
+	content: '';
+	position: absolute;
+	width: 80%;
+	left: 10%;
+	bottom: 0;
+	height: 1px;
+	background-color: var(--third-color);
+
+}
+
+.sliderContainer {
+
+	padding: var(--space-3xs);
+	background-color: var(--second-color);
+
+}
+
+.slider {
+
+	width: 100%;
+	cursor: pointer;
+
+}
+
+.image {
+
+	width: 100%;
+	object-fit: contain;
+	
+}
+

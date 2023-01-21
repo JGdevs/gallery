@@ -1,0 +1,38 @@
+.panel {
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100%;
+  
+}
+
+.panel > i {
+
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+
+}
+
+.menuMobile {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 40%;
+  width: 100%;
+
+}
+
+.menuMobile > * {
+
+  margin-left: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+

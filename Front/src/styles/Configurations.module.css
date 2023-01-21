@@ -1,0 +1,26 @@
+.configurations > h2 {
+
+	margin-top: var(--space-xs);
+	text-align: center;
+	border-bottom: thin solid var(--body-color-dark);
+
+}
+
+.configurations > section {margin-top: var(--space-xs);}
+
+.confSection {margin-top: var(--space-3xs);}
+
+.confOption > span {
+
+	display: inline-block;
+	padding: var(--space-xs);
+
+}
+
+.confOption {cursor: pointer;}
+
+.confOption:hover {
+
+	background-color: var(--second-color);
+
+}
