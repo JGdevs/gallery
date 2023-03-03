@@ -1,14 +1,17 @@
 import {useState} from 'react';
 import UploadForm from './UploadForm';
+import useImages from '../context/ImagesContext';
 import {saveImages} from '../services/images';
 import Image from './Image';
 import styles from '../styles/ConfModal.module.css';
 	
-const NewImages = ({images,setImages}) => {
+const NewImages = () => {
 
 	const [files,setFiles] = useState(null),
 
-	[modal,setModal] = useState(false);
+	[modal,setModal] = useState(false),
+
+	{setImages} = useImages();
 
 	function uploadImages () {
 
@@ -20,7 +23,7 @@ const NewImages = ({images,setImages}) => {
 
 		if (save) {
 
-			Images = Images.map((image,i = 0) => {
+			Images = Images.map((image,i) => {
 				
 				let date = new Date().toLocaleString(),
 
@@ -52,7 +55,7 @@ const NewImages = ({images,setImages}) => {
 
 					setModal(files.length);
 
-					setImages([...images,...Images]);
+					setImages(prevImages => [...prevImages,...Images]);
 
 				}
 
