@@ -2,91 +2,36 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useConf from '../context/ConfContext';
 import useModals from '../context/ModalContext';
+import TypeSearch from './TypeSearch';
 import styles from '../styles/SearchModal.module.css';
 
 const SearchModal = () => {
 
-	const [typeSearch,setTypeSearch] = useState(null),
+	const [type,setType] = useState(null),
 
-	[searchValue,setSearchValue] = useState(null),
+	[search,setSearch] = useState(null),
 
 	nav = useNavigate(),
-
-	HandlerChange = (e) => setSearchValue(e.target.value),
 
 	{setSearchModal} = useModals(),
 
 	{conf} = useConf();
 
-	function HandlerDate (e) {
-
-		let date = e.target.value.split('-');
-
-		date.reverse();
-
-		let day = (date[0][0] == 0) ? date[0][1] : date[0],
-
-		month = (date[1][0] == 0) ? date[1][1] : date[1];
-
-		date[1] = day;
-
-		date[0] = month;	
-
-		setSearchValue(date.join('-'));	
-
-	}
-
 	function HandlerSubmit (e) {
 
 		e.preventDefault();
 
-		if(typeSearch == null || searchValue == null) {
+		if(type == null || search == null) {
 
-			alert('los campos no pueden estar vacios');
+			alert('the fields cannot be empty');
 
 			return false;
 
 		}
 
-		nav(`/Search/${typeSearch}/${searchValue}`);
+		nav(`/Search/${type}/${search}`);
 
 		setSearchModal(false);
-
-	}
-
-	function TypeSearch () {
-
-		switch (typeSearch) {
-
-			case 'name': {
-
-				return <input className={styles.searchInput} type="text" required onChange={HandlerChange}/>
-
-			}
-
-			case 'date': {
-
-				return <input className={styles.searchInput} type="date" required onChange={HandlerDate}/>
-
-			}
-
-			case 'type': {
-
-				return (
-
-					<select className={styles.searchSelect} onChange={HandlerChange}>
-						
-						<option selected="" disabled="" hidden="">Escoge un formato</option>
-						<option value="jpeg">JPG</option>
-						<option value="png">PNG</option>
-
-					</select>
-					
-				)
-
-			}
-
-		}
 
 	}
 
@@ -104,12 +49,12 @@ const SearchModal = () => {
 				
 				<aside className={`${styles.searchOptions}`}>
 
-					<select onChange={(e) => setTypeSearch(e.target.value)}>
+					<select onChange={(e) => setType(e.target.value)}>
 
 						<option selected="" disabled="" hidden="">Escoge un filtro de busqueda</option>
-						<option value="name">Nombre</option>
-						<option value="date">Fecha</option>
-						<option value="type">Tipo</option>
+						<option value="name">Name</option>
+						<option value="date">Date</option>
+						<option value="type">Type</option>
 
 					</select>
 
@@ -117,7 +62,7 @@ const SearchModal = () => {
 
 				<form className={`${styles.searchForm}`} onSubmit={HandlerSubmit}>
 
-					{typeSearch && TypeSearch()}
+					{type && <TypeSearch type={type} setSearch={setSearch}/>}
 
 					<input className={`${styles.searchInput}`} type="submit" value="Buscar"/>
 

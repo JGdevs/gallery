@@ -17,10 +17,10 @@ const MenuMobile = ({menuRef,handlerMenu}) => {
 			
 			<nav className={styles.menuMobile}>
 				
-				<NavLink className={`text-${conf.theme}`} to="/Upload" onClick={handlerMenu}>Subir imagenes</NavLink>
-				<div onClick={() => setSearchModal(true)}>buscar</div>
-				<NavLink className={`text-${conf.theme}`} to="/Trash" onClick={handlerMenu}>Papelera</NavLink>
-				<NavLink className={`text-${conf.theme}`} to="/Configuraciones" onClick={handlerMenu}>configuraciones</NavLink>
+				<NavLink className={`text-${conf.theme}`} to="/Upload" onClick={handlerMenu}>Upload Images</NavLink>
+				<div onClick={() => setSearchModal(true)}>Search</div>
+				<NavLink className={`text-${conf.theme}`} to="/Trash" onClick={handlerMenu}>Trash</NavLink>
+				<NavLink className={`text-${conf.theme}`} to="/Configurations" onClick={handlerMenu}>Configurations</NavLink>
 
 			</nav>
 

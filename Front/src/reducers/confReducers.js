@@ -3,10 +3,9 @@ import {TYPES} from '../actions/confActions.js';
 export const initialStateConf = JSON.parse(localStorage.getItem('confGallery')) || {
 
 		theme:'dark',
-		gridStyle:'grid-gallery',
-		borderImgs:'square-border',
-		order:'byDate',
-		typeLoad:'forPage',
+		gridStyle:'normal',
+		borderImgs:'square',
+		typeLoad:'pagination',
 
 }
 
@@ -37,16 +36,6 @@ export function confReducer (state,action) {
 		case TYPES.changeBorderImages : {
 
 			 const newConf = {...state,borderImgs:action.payload}
-
-			 localStorage.setItem('confGallery',JSON.stringify(newConf));
-
-			 return newConf;
-
-		}
-
-		case TYPES.changeOrder : {
-
-			 const newConf = {...state,order:action.payload}
 
 			 localStorage.setItem('confGallery',JSON.stringify(newConf));
 

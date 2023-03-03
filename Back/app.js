@@ -1,72 +1,61 @@
 'use strict';
 
+require('dotenv').config();
+	
 const express = require('express'),
 
 mongoose = require('mongoose'),
 
-restFull = require('express-method-override')('_method'),
-
 bodyParser = require('body-parser'),
+
+{Transform} = require('node:stream'),
 
 port = (process.env.PORT || 4069),
 
 //conectandose con mongo
-	
-conf = {
-
-	host:'localhost',
-	db:'Gallery'
-
-},
 
 Schema = mongoose.Schema,
 
 ImagesSchema = new Schema ({
 
-	CreateDate:"string",
-	name:"string",
-	src:"string",
-	size:"number",
-	type:"string"
+	CreateDate:'string',
+	name:'string',
+	src:'string',
+	size:'number',
+	type:'string'
 
-},{colletion:"images"}),
+},{colletion:'images'}),
 
 TrashSchema = new Schema ({
 
-	CreateDate:"string",
-	DeleteDate:"string",
-	name:"string",
-	src:"string",
-	size:"number",
-	type:"string",
+	CreateDate:'string',
+	DeleteDate:'string',
+	name:'string',
+	src:'string',
+	size:'number',
+	type:'string',
 
-},{collection:"trash"}),
+},{collection:'trash'}),
 
-trashConn = mongoose.model("trash",TrashSchema),
+trashConn = mongoose.model('trash',TrashSchema),
 
-conn = mongoose.model("images",ImagesSchema);
+conn = mongoose.model('images',ImagesSchema);
 
-mongoose.connect(`mongodb:\/\/${conf.host}/${conf.db}`);
+mongoose.set("strictQuery", false);
+
+mongoose.connect(process.env.MONGO_URI);
 
 //fin conexion mongo
 
-const app = express();
-
 //configurando app
 
+const app = express();
+
 app.set('port',port);
-
-// ejecutando middlewares
-
-//parse application/json
-
-//parse application/x-www-form-urlencoded
 
 app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(bodyParser.urlencoded({extended:false,limit:'50mb'}));
-
-app.use(restFull);
 
 app.use((req,res,next) => {
 
@@ -109,8 +98,6 @@ app.get('/Search/:filter/:search',(req,res,next) => {
 
 			search = search.replaceAll('-','/');
 
-			console.log(search);
-
 			conn.find().exec((err,docs) => {
 
 				const result = docs.filter((image) => image.CreateDate.includes(search.slice(0,search.indexOf('.'))));
@@ -127,9 +114,7 @@ app.get('/Search/:filter/:search',(req,res,next) => {
 
 		case 'type' : {
 
-			console.log('type')
-
-			conn.find({type:`${search}`}).exec((err,docs) => {
+			conn.find({type:search}).exec((err,docs) => {
 
 				res.writeHead(200,{'content-type':'application/json'});
 
@@ -173,15 +158,33 @@ app.get('/infinite/:n',(req,res,next) => {
 
 	let {n} = req.params;
 
-	conn.find().skip(n).limit(9).exec((err,docs) => {
+	const transformData = new Transform({objectMode:true});
 
-		if (err) throw err
+	transformData.isWritten = false;
 
-		res.writeHead(200,{'content-type':'application/json'});	
+	transformData._transform = function (chunk,encoding,callback) {
 
-		res.end(JSON.stringify(docs));
+		if(!this.isWritten) {
 
-	});
+			this.isWritten = true;
+
+			callback(null, '[' + JSON.stringify(chunk));
+
+		}
+
+		else callback(null, ',' + JSON.stringify(chunk));
+
+	}
+
+	transformData._flush = function(callback) {
+
+		callback(null,']');
+
+	}
+
+	const stream = conn.find().skip(n).limit(9).cursor().pipe(transformData);
+
+	stream.pipe(res);
 
 });
 

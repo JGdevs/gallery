@@ -1,7 +1,7 @@
-import {useState,useRef,useLayoutEffect} from 'react';
+import {useState,useRef,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {HelpHttp} from '../helpers/HelpHttp';
 import useImages from '../context/ImagesContext';
+import {saveImages} from '../services/images';
 import SidebarItem from './SidebarItem';
 import Slider from './Slider';
 import Loader from './Loader';
@@ -11,13 +11,13 @@ const PhotoEditor = () => {
 
 	let {position} = useParams();
 
-	const {images} = useImages(),
+	const {getImage} = useImages(),
+
+	image = getImage(position),
 
 	imgRef = useRef(),
 
 	drawRef = useRef(),
-
-	api = HelpHttp(),
 
 	Default_Options = [
 
@@ -179,12 +179,13 @@ const PhotoEditor = () => {
 
 		delete newImg._id;
 
-		api.post('http://localhost:4069',{
+		saveImages([newImg]).then(res => {
 
-			body:[newImg],
-			headers:{"content-type":"application/json"}
+			if(!res.err) window.alert('image save successfully');
 
-		});
+			else console.log(res.err);
+
+		})
 
 	}
 
@@ -196,7 +197,7 @@ const PhotoEditor = () => {
 
 				{ 
 
-					(images) ? <img className={styles.image} src={images[position].src} style={getImageStyle()} ref={imgRef}/> 
+					(image) ? <img className={styles.image} src={image.src} style={getImageStyle()} ref={imgRef}/> 
 
 					: <Loader/>
 
@@ -214,7 +215,7 @@ const PhotoEditor = () => {
 
 				<Slider min={selectedOption.range.min} max={selectedOption.range.max} value={selectedOption.value} handlerChange={handlerSliderChange}/> 
 
-				<button className={styles.editorButton} onClick={() => saveEditImage(imgRef.current,images[position])}>guardar</button>
+				<button className={styles.editorButton} onClick={() => saveEditImage(imgRef.current,image)}>guardar</button>
 
 			</aside>
 

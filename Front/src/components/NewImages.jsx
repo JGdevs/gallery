@@ -1,23 +1,20 @@
 import {useState} from 'react';
-import {HelpHttp} from '../helpers/HelpHttp';
 import UploadForm from './UploadForm';
+import {saveImages} from '../services/images';
 import Image from './Image';
+import styles from '../styles/ConfModal.module.css';
 	
 const NewImages = ({images,setImages}) => {
 
 	const [files,setFiles] = useState(null),
 
-	[modal,setModal] = useState(false),
+	[modal,setModal] = useState(false);
 
-	api = HelpHttp(),
-
-	url = 'http://localhost:4069';
-
-	function saveImages () {
+	function uploadImages () {
 
 		let Images = Array.from(document.querySelectorAll('.image'));
 
-		if (Images.length == 0) return false; 
+		if (Images.length == 0) return; 
 
 		let save = window.confirm('¿guardar imagenes?');
 
@@ -47,14 +44,7 @@ const NewImages = ({images,setImages}) => {
 
 			});
 
-			let options = {
-
-				body:Images,
-				headers:{"content-type":"application/json"}
-
-			}
-
-			api.post(url,options).then(res => {
+			saveImages(Images).then(res => {
 
 				if(!res.err) {
 
@@ -80,17 +70,17 @@ const NewImages = ({images,setImages}) => {
 			
 			{files && <label className="button in-desktop" htmlFor="save">guardar imagenes</label>}
 
-			<section className="grid-gallery">
+			<section className="normal">
 				
 				{(files) ? files.map((image,i = 0) => <Image key={i + 1} image={image}/>) : <UploadForm setFiles={setFiles}/>}
 
-				<input className="invisible" id="save" type="radio" onClick={saveImages}/>
+				<input className="invisible" id="save" type="radio" onClick={uploadImages}/>
 
 				{modal && 
 
-					<div className="modal animation-none bg-modal">
+					<div className={`${styles.modal} animation-none bg-modal`}>
 						
-						<p>se han guardado {modal} imagenes</p>
+						<p>{`${modal} ${modal > 1 ? 'images' : 'image'} have been saved`} </p>
 
 					</div>
 

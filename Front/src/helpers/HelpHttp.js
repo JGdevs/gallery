@@ -1,6 +1,10 @@
-export const HelpHttp = () => {
+export const HelpHttp = (baseURL) => {
 
 	const customFetch = (endpoint,options) => {
+
+		if (baseURL) endpoint = (endpoint) ? baseURL + endpoint : baseURL;
+
+		if (typeof endpoint !== 'string') throw new Error(`excepected a URL but got ${typeof endpoint}`);
 
 		const defaultHeaders = {
 
@@ -30,7 +34,11 @@ export const HelpHttp = () => {
 
 	}
 
-	const get = (url,options = {}) => customFetch(url,options);
+	const get = (url,options = {}) => {
+
+		return customFetch(url,options);
+
+	}
 
 
 	const post = (url,options = {}) => {
@@ -68,5 +76,3 @@ export const HelpHttp = () => {
 	}
 
 }
-
-	

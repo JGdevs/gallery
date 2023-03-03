@@ -16,15 +16,9 @@ const Header = () => {
 
 	{conf} = useConf(),
 
-	{initialImages,setImages} = useImages(),
+	{setImages} = useImages(),
 
 	{setSearchModal} = useModals();
-
-	function toHome () {
-
-		if(conf.typeLoad === 'forPage') setImages(initialImages);
-
-	};
 
 	function handlerMenu () {
 
@@ -47,13 +41,13 @@ const Header = () => {
 			
 			<section className={styles.headerStart}>
 				
-				<NavLink className="title" to={(conf.typeLoad == 'forPage') ? '/page/1' : '/'} onClick={toHome}>Galeria</NavLink>
+				<NavLink className="title" to={(conf.typeLoad == 'pagination') ? '/page/1' : '/'}>Gallery</NavLink>
 
 				{
 			
-					(location == "/Upload") ? <label className="button in-mobile" htmlFor="save">guardar imagenes</label>
+					(location == "/Upload") ? <label className="button in-mobile" htmlFor="save">Save images</label>
 
-					: <NavLink className="button in-mobile" to="/Upload">subir imagenes</NavLink>
+					: <NavLink className="button in-mobile" to="/Upload">Upload images</NavLink>
 
 				}
 
@@ -63,11 +57,11 @@ const Header = () => {
 				
 				<DropDown/>
 
-				<div className="in-mobile" onClick={handlerSearch}>Buscar</div>
+				<div className="in-mobile" onClick={handlerSearch}>Search</div>
 
 			</section>
 
-			<i className="bi-list in-desktop fs-3 mr-rg mr-tp" onClick={handlerMenu}></i>
+			<i className="bi-list in-desktop fs-2 mr-rg mr-tp" onClick={handlerMenu}></i>
 
 			<MenuMobile menuRef={menuRef} handlerMenu={handlerMenu}/>
 

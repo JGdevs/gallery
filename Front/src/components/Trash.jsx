@@ -1,6 +1,7 @@
 import {useState,useEffect} from 'react';
-import {HelpHttp} from '../helpers/HelpHttp';
+import {getAllTrash} from '../services/images';
 import useModals from '../context/ModalContext';
+import useConf from '../context/ConfContext';
 import Image from './Image';
 import ImageModal from './ImageModal';
 import SearchModal from './SearchModal';
@@ -8,19 +9,19 @@ import Void from './Void';
 import Loader from './Loader';
 import useImages from '../context/ImagesContext';
 
-const Trash = ({Delete}) => {
+const Trash = () => {
 
-	const {imageModal,setImageModal,searchModal} = useModals(),
+	const {imageModal,searchModal} = useModals(),
 
-	{trash,setTrash,eraseImage} = useImages(),
+	{trash,setTrash} = useImages(),
 
-	api = HelpHttp();
+	{conf} = useConf();
 
 	useEffect(() => {
 
 		if(trash) return;
 
-		api.get('http://localhost:4069/Papelera').then(res => {
+		getAllTrash().then(res => {
 
 			if(!res.err) setTrash(res);
 
@@ -32,7 +33,7 @@ const Trash = ({Delete}) => {
 
 	return (
 
-		<section className="grid-gallery">
+		<section className={conf.gridStyle}>
 
 			{
 
@@ -42,7 +43,7 @@ const Trash = ({Delete}) => {
 
 			}
 
-			{(imageModal === 0 || imageModal) && <ImageModal images={trash} Delete={eraseImage}/>}
+			{(imageModal === 0 || imageModal) && <ImageModal origin="trash"/>}
 
 			{searchModal && <SearchModal/>}
 

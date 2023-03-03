@@ -6,7 +6,7 @@ const Void = ({origin}) => {
 
 		case "gallery": {
 
-			title = "no hay imagenes todavia agrega algunas";
+			title = "No images yet add some";
 
 			break;
 
@@ -14,7 +14,7 @@ const Void = ({origin}) => {
 
 		case "trash": {
 
-			title = "la papelera esta vacia";
+			title = "The trash is empty";
 
 			break;
 
@@ -46,7 +46,7 @@ const Void = ({origin}) => {
 
 			}
 
-			{origin === 'gallery' && <p className="text-center">Haz click en "subir imagenes" para subir algunas</p>}
+			{origin === 'gallery' && <p className="text-center">Click on "upload images" to upload some</p>}
 
 		</section>
 

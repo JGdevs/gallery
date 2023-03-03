@@ -4,6 +4,5 @@ export const TYPES = {
 	changeTypeLoad:'changeTypeLoad',
 	changeBorderImages:'changeBorderImages',
 	changeGridStyle:'changeGridStyle',
-	changeOrder:'changeOrder'
 
 }

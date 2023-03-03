@@ -1,4 +1,5 @@
 import GalleryApp from './components/GalleryApp';
+import {BrowserRouter} from 'react-router-dom'
 import {ConfProvider} from './context/ConfContext';
 import {ImagesProvider} from './context/ImagesContext';
 
@@ -6,15 +7,19 @@ function App() {
 
   return (
 
-    <ConfProvider>
+    <BrowserRouter>
 
-      <ImagesProvider>
+      <ConfProvider>
 
-       <GalleryApp/>
+        <ImagesProvider>
 
-      </ImagesProvider> 
+         <GalleryApp/>
 
-    </ConfProvider>
+        </ImagesProvider> 
+
+      </ConfProvider>
+
+    </BrowserRouter>
 
   );
 

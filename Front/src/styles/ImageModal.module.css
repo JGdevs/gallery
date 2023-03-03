@@ -32,7 +32,8 @@
 	padding: var(--space-2xs) 0;
 	border-radius: .25rem;
 	background-color: #12121288;
-	
+	opacity: 0;
+	transition: opacity .2s ease-in-out;	
 	
 }
 
@@ -44,22 +45,19 @@
 
 }
 
-.modalOption > * {color: #fff;}
-
-.modalOption > i {font-size: var(--step-0);}
-
-.modalOptions {
-
-		opacity: 0;
-		transition: opacity .2s ease-in-out;
-
-}
-
 .modalOptions:hover {opacity: 1;}
+
+.modalOption > * {color: #fff;}
 
 .modalOption > i {font-size: var(--step-2);}
 
 .modalOption:hover > * {color: var(--main-color);}
+
+@media (width < 48rem) {
+
+	.modalOptions {opacity: 1;} 
+
+}
 
 @keyframes aparecer {
 	

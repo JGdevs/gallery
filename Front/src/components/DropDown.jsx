@@ -15,12 +15,12 @@ const DropDown = () => {
 
 			<nav className={`${styles.dropdown} in-mobile mr-rg-2`} ref={dropDownRef} onClick={handlerDropDown}>
 
-				<button className={`${styles.link} fs--2`}>Opciones</button>
+				<button className={`${styles.link} fs--2`}>Options</button>
 				
 				<ul className={`${styles.dropdownMenu} child-bg-${conf.theme}`}>
 					
-					<NavLink to="/Trash">papelera</NavLink>
-					<NavLink to="/Configuraciones">configuraciones</NavLink>
+					<NavLink to="/Trash">Trash</NavLink>
+					<NavLink to="/Configurations">Configurations</NavLink>
 
 				</ul>
 

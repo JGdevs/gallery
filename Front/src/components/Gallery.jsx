@@ -1,6 +1,6 @@
-import {useState,useEffect,useLayoutEffect} from 'react';
+import {useEffect,useRef} from 'react';
 import {useParams,useNavigate,useLocation} from 'react-router-dom';
-import {HelpHttp} from '../helpers/HelpHttp';
+import {getImages} from '../services/images';
 import useModals from '../context/ModalContext';
 import useImages from '../context/ImagesContext';
 import useConf from '../context/ConfContext';
@@ -14,69 +14,45 @@ const Gallery = () => {
 
 	let location = useLocation();
 
-	const [loader,setLoader] = useState(false),
+	const nav = useNavigate(),
 
-	nav = useNavigate(),
+	btnsRef = useRef(),
 
 	{imageModal,searchModal} = useModals(),
 
 	{images,setImages,hasMore,setHasMore} = useImages(),
 
-	{conf} = useConf(),
+	{conf} = useConf();
 
-	api = HelpHttp();
+	let {n} = useParams();
 
-	let {n} = useParams(),
-
-	url = 'http://localhost:4069';
-
-	if(images && conf.typeLoad === 'forPage' && images.length > 9) images.splice(10); 
+	if(images && conf.typeLoad === 'pagination' && images.length > 9) images.splice(10); 
 
 	function prevAndNext (e) {
-
-		if(loader) return false; 
 
 		if(e.target.id === 'prev') n = (!n) ? 2 : parseInt(n) - 1;
 
 		else n = (!n) ? 2 : parseInt(n) + 1;
 
-		nav(`/Page/${n}`);
+		btnsRef.current.classList.add('disabled');
+
+		getImages(`/Page/${n}`).then(res => {
+
+			if(!res.err) {
+
+				btnsRef.current.classList.remove('disabled');
+
+				nav(`/Page/${n}`);
+				setImages(res.docs);
+				setHasMore(res.hasMore);
+
+			}
+
+			else console.log(res.err);
+
+		});
 
 	}
-
-	useEffect(() => {
-
-		if(conf.typeLoad === "forPage" && n) {
-
-			setLoader(true);
-
-			let newUrl = `${url}/Page/${n}`;
-
-			api.get(newUrl).then(res => {
-
-				if(!res.err) {
-
-					setImages(res.docs);
-
-					setHasMore(res.hasMore);
-
-					setLoader(false);
-
-				}
-
-				else console.log(res.err);
-
-			});
-
-		}
-
-	},[n])
-
-	useLayoutEffect(() => {
-
-		if(location.pathname == '/page/1') setHasMore(true);
-
-	},[location])
 
 	useEffect(() => {
 
@@ -84,19 +60,19 @@ const Gallery = () => {
 
 			const observer = new IntersectionObserver(entries => {
 
-				let newUrl = `${url}/infinite/${images.length}`;
+				let newUrl = `/infinite/${images.length}`;
 
 				if(entries[0].isIntersecting) {
 
-					api.get(newUrl).then(res => {
+					getImages(newUrl).then(res => {
 
 						if(!res.err) {
 
 							observer.disconnect();
 
-							if(res.length == 0 ) {alert('se acabaron las imagenes'); return false}
+							if(res.length == 0 ) {alert('se acabaron las imagenes'); return}
 
-							setImages([...images,...res]);
+							else setImages([...images,...res]);
 
 						}
 
@@ -124,9 +100,7 @@ const Gallery = () => {
 
 				{
 
-					(loader) ? <Loader/> 
-
-					: (!images) ? <Loader/> 
+					(!images) ? <Loader/>
 
 					: images.length > 0 && images.map((image,i) => <Image pos={i} key={i + 1} image={image}/>)
 
@@ -140,9 +114,9 @@ const Gallery = () => {
 
 			{images && images.length == 0 && <Void origin="gallery"/>}
 
-			{!loader && conf.typeLoad === 'forPage' &&
+			{conf.typeLoad === 'pagination' &&
 
-				<div className="nav-pages">
+				<div className="nav-pages" ref={btnsRef}>
 			
 					{n >= 2 && <button className={`button child-bg-${conf.theme}`} id="prev" onClick={prevAndNext}>anterior</button>}
 

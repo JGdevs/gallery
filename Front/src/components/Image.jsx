@@ -25,6 +25,14 @@ const Image = ({image,pos = false}) => {
 
 	useEffect(() => {
 
+		if(conf.gridStyle === 'mansory' && location !== '/Upload') {
+
+			imageRef.current.style.gridRowEnd = 'span ' + Math.round(Math.random() * 2);
+
+			imageRef.current.style.gridColumnEnd = 'span ' + Math.round(Math.random() * 2);
+
+		}
+
 		if(!image.src) {
 
 			const reader = new FileReader();
@@ -35,27 +43,17 @@ const Image = ({image,pos = false}) => {
 
 		}
 
-		else setSource(image.src)
-
-	},[]);
-
-	useEffect(() => {
-
-		if(conf.gridStyle === 'mansory' && location !== '/Upload') {
-
-			imageRef.current.style.gridRowEnd = 'span ' + Math.round(Math.random() * 2);
-
-			imageRef.current.style.gridColumnEnd = 'span ' + Math.round(Math.random() * 2);
-
-		}
-
-		setSource(image.src);
+		else setSource(image.src);
 
 	},[image]);
 
+	useEffect(() => {
+
+	},[source]);
+
 	return (
 
-		<div className={`image ${conf.borderImgs}`} ref={imageRef} onClick={HandlerClick}>
+		<div className={`image ${conf.borderImgs} ${source == null ? 'placeholder' : ''}`} ref={imageRef} onClick={HandlerClick}>
 			
 			{source && <img className={`${conf.borderImgs}`} src={source}/>}
 

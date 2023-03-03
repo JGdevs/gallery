@@ -1,6 +1,8 @@
 import {useState,useEffect} from 'react';
 import useConf from '../context/ConfContext';
 import ConfModal from './ConfModal';
+import {TYPES} from '../actions/confActions';
+import {options} from '../data/options';
 import styles from '../styles/Configurations.module.css';
 
 const Configurations = () => {
@@ -43,18 +45,9 @@ const Configurations = () => {
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 
-						<li className={styles.confOption} onClick={() => setOption('Charge')}>
+						<li className={styles.confOption} onClick={() => setOption({option:options.typeLoad,action:TYPES.changeTypeLoad})}>
 
 							<span>Tipo de carga</span>
-
-							<i></i>
-
-						</li>
-
-
-						<li className={styles.confOption} onClick={() => setOption('Order')}>
-
-							<span>Ordernar</span>
 
 							<i></i>
 
@@ -70,7 +63,7 @@ const Configurations = () => {
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 						
-						<li className={styles.confOption} onClick={() => setOption('Border')}>
+						<li className={styles.confOption} onClick={() => setOption({option:options.borderImgs,action:TYPES.changeBorderImages})}>
 
 							<span>Borde de las imagenes</span>
 
@@ -78,7 +71,7 @@ const Configurations = () => {
 
 						</li>
 
-						<li className={styles.confOption} onClick={() => setOption('Theme')}>
+						<li className={styles.confOption} onClick={() => setOption({option:options.theme,action:TYPES.changeTheme})}>
 
 							<span>Tema</span>
 
@@ -86,7 +79,7 @@ const Configurations = () => {
 
 						</li>
 
-						<li className={styles.confOption} onClick={() => setOption('Style')}>
+						<li className={styles.confOption} onClick={() => setOption({option:options.gridStyle,action:TYPES.changeGridStyle})}>
 
 							<span>Estilo de la galeria</span>
 
@@ -98,7 +91,7 @@ const Configurations = () => {
 
 				</section>
 
-				{option && <ConfModal option={option} setOption={setOption}/>}
+				{option && <ConfModal op={option} setOption={setOption}/>}
 
 		</article>
 

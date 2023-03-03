@@ -1,6 +1,7 @@
 import {useState,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {HelpHttp} from '../helpers/HelpHttp';
+import {searchImages} from '../services/images';
+import useConf from '../context/ConfContext';
 import ModalContext from '../context/ModalContext';
 import Image from './Image';
 import Loader from './Loader';
@@ -8,71 +9,25 @@ import ImageModal from './ImageModal';
 import SearchModal from './SearchModal';
 import useModals from '../context/ModalContext';
 
-const SearchResult = ({Delete}) => {
+const SearchResult = () => {
 
-	const [searchImages,setSearchImages] = useState(null),
+	const [images,setImages] = useState(null),
 
 	{imageModal,searchModal} = useModals(),
 
-	api = HelpHttp(),
-
-	url = 'http://localhost:4069';
+	{conf} = useConf();
 
 	let {filter,search} = useParams();
 
 	useEffect(() => {
 
-		switch (filter) {
+		searchImages(filter,search).then(res => {
 
-			case 'name': {
+			if(!res.err) setImages(res);
 
-				let searchUrl = `${url}/Search/${filter}/${search}`;
+			else console.log(res.err);
 
-				api.get(searchUrl).then(res => {
-
-					if(!res.err) setSearchImages(res);
-
-					else console.log(res.err);
-
-				});
-
-				break;
-
-			}
-
-			case 'date': {
-
-				let searchUrl = `${url}/Search/${filter}/${search}`;
-
-				api.get(searchUrl).then(res => {
-
-					if(!res.err) setSearchImages(res);
-
-					else console.log(res.err,'hubo un error');
-
-				});
-
-				break;
-
-			}
-
-			case 'type': {
-
-				let searchUrl = `${url}/Search/${filter}/${search}`;
-
-				api.get(searchUrl).then(res => {
-
-					if(!res.err) setSearchImages(res);
-
-					else console.log(res.err);
-
-				});
-
-				break;
-
-			}
-
-		}
+		});
 
 	},[filter,search]);
 
@@ -80,23 +35,23 @@ const SearchResult = ({Delete}) => {
 
 		<>
 
-			{searchImages && <p className="text-center fs-1 mr-tp-2">resultados para: {search}</p>}
+			{images && <p className="text-center fs-1 mr-tp-2">results for: {search}</p>}
 
-			<section className="grid-gallery">
+			<section className={`${conf.gridStyle}`}>
 
 				{
 
-					(!searchImages) ? <Loader/>
+					(!images) ? <Loader/>
 
-					: (searchImages.length > 0) 
+					: (images.length > 0) 
 
-						? searchImages.map((image,i) => <Image pos={i} key={i} image={image}/>) 
+						? images.map((image,i) => <Image pos={i} key={i} image={image}/>) 
 
-						: <h2 className="text-center">No hay resultados para su busqueda</h2> 
+						: <h2 className="text-center">There are no matches for your search</h2> 
 
 				}
 
-				{(imageModal === 0 || imageModal) && <ImageModal images={searchImages} Delete={Delete}/>}
+				{(imageModal === 0 || imageModal) && <ImageModal images={images}/>}
 
 				{searchModal && <SearchModal/>}
 

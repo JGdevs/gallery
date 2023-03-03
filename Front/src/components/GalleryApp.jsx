@@ -1,4 +1,4 @@
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import {Routes,Route} from 'react-router-dom';
 import {ModalProvider} from '../context/ModalContext';
 import useConf from '../context/ConfContext';
 import Header from './Header';
@@ -30,34 +30,30 @@ const GalleryApp = () => {
 	return (
 
 		<>
-
-			<BrowserRouter>
 				
-				<ModalProvider>
+			<ModalProvider>
 
-					<Header/>
+				<Header/>
 
-						<Routes>
-			    			
-			    		<Route path="/" element={<Gallery/>}/>
+					<Routes>
+		    			
+		    		<Route path="/" element={<Gallery/>}/>
 
-			    		<Route path="/Page/:n" element={<Gallery/>}/>
+		    		<Route path="/Page/:n" element={<Gallery/>}/>
 
-			    		<Route path="/Upload" element={<NewImages/>}/>
+		    		<Route path="/Upload" element={<NewImages/>}/>
 
-			    		<Route path="/Search/:filter/:search" element={<SearchResult/>}/>
+		    		<Route path="/Search/:filter/:search" element={<SearchResult/>}/>
 
-							<Route path="/Configuraciones" element={<Configurations/>}/>			    		
+						<Route path="/Configurations" element={<Configurations/>}/>			    		
 
-			    		<Route path="/Trash" element={<Trash/>}/>
+		    		<Route path="/Trash" element={<Trash/>}/>
 
-			    		<Route path="/Editar/:position" element={<PhotoEditor/>}/>
+		    		<Route path="/Edit/:position" element={<PhotoEditor/>}/>
 
-			    	</Routes>
+		    	</Routes>
 
-		    </ModalProvider>
-
-			</BrowserRouter>
+	    </ModalProvider>
 
 		</>
 
