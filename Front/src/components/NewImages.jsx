@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState,useRef} from 'react';
 import UploadForm from './UploadForm';
 import useImages from '../context/ImagesContext';
 import {saveImages} from '../services/images';
@@ -11,51 +11,32 @@ const NewImages = () => {
 
 	[modal,setModal] = useState(false),
 
-	{setImages} = useImages();
+	{setImages} = useImages(),
+
+	formRef = useRef();
 
 	function uploadImages () {
 
-		let Images = Array.from(document.querySelectorAll('.image'));
-
-		if (Images.length == 0) return; 
+		if (files == null) return;
 
 		let save = window.confirm('¿guardar imagenes?');
 
 		if (save) {
 
-			Images = Images.map((image,i) => {
-				
-				let date = new Date().toLocaleString(),
-
-				{name,size,type} = files[i];
-
-				name = files[i].name.substring(0,name.indexOf('.'));
-
-				type = type.slice(type.indexOf('/') + 1);
-
-				const obj = {
-
-					CreateDate:date,
-					name,
-					src:image.firstElementChild.src,
-					size,
-					type
-
-				}
-
-				return obj;
-
-			});
-
-			saveImages(Images).then(res => {
+			saveImages(formRef.current).then(res => {
 
 				if(!res.err) {
 
-					setTimeout(() => {setModal(null);setFiles(null)},3000);
+					setTimeout(() => {
+
+						formRef.current.classList.remove('invisible');
+						setModal(null);
+						setFiles(null);
+
+					},3000);
 
 					setModal(files.length);
-
-					setImages(prevImages => [...prevImages,...Images]);
+					setImages(prevImages => [...prevImages,...files]);
 
 				}
 
@@ -71,11 +52,13 @@ const NewImages = () => {
 
 		<article>
 			
-			{files && <label className="button in-desktop" htmlFor="save">guardar imagenes</label>}
+			{files && <label className="button in-desktop fs--1" htmlFor="save">Save images</label>}
 
 			<section className="normal">
 				
-				{(files) ? files.map((image,i = 0) => <Image key={i + 1} image={image}/>) : <UploadForm setFiles={setFiles}/>}
+				<UploadForm formRef={formRef} setFiles={setFiles}/>
+
+				{(files) && files.map((image,i = 0) => <Image key={i + 1} image={image}/>)}
 
 				<input className="invisible" id="save" type="radio" onClick={uploadImages}/>
 

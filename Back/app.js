@@ -6,9 +6,11 @@ const express = require('express'),
 
 mongoose = require('mongoose'),
 
-bodyParser = require('body-parser'),
-
 {Transform} = require('stream'),
+
+multer = require('multer'),
+
+AWSClientS3 = require("aws-client-s3"),
 
 port = (process.env.PORT || 4069),
 
@@ -18,26 +20,13 @@ Schema = mongoose.Schema,
 
 ImagesSchema = new Schema ({
 
-	CreateDate:'string',
+	createDate:{type:'Date',default:Date.now},
 	name:'string',
 	src:'string',
 	size:'number',
 	type:'string'
 
-},{colletion:'images'}),
-
-TrashSchema = new Schema ({
-
-	CreateDate:'string',
-	DeleteDate:'string',
-	name:'string',
-	src:'string',
-	size:'number',
-	type:'string',
-
-},{collection:'trash'}),
-
-trashConn = mongoose.model('trash',TrashSchema),
+},{collection:'images'}),
 
 conn = mongoose.model('images',ImagesSchema);
 
@@ -45,17 +34,28 @@ mongoose.set("strictQuery", false);
 
 mongoose.connect(process.env.MONGO_URI);
 
-//fin conexion mongo
+// configurando multer 
+
+const storage = multer.memoryStorage(),
+upload = multer({storage});
+
+// configurando AWS S3 client 
+
+const config = {
+	region: process.env.BUCKET_REGION,
+	credentials: {
+		accessKeyId: process.env.ACCESS_KEY,
+		secretAccessKey:process.env.SECRECT_ACCESS_KEY
+	}
+}
+
+const client = new AWSClientS3(config);
 
 //configurando app
 
 const app = express();
 
 app.set('port',port);
-
-app.use(bodyParser.json({limit:'50mb'}));
-
-app.use(bodyParser.urlencoded({extended:false,limit:'50mb'}));
 
 app.use((req,res,next) => {
 
@@ -188,31 +188,41 @@ app.get('/infinite/:n',(req,res,next) => {
 
 });
 
-app.get('/Papelera',(req,res,next) => {
+app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
-	trashConn.find().exec((err,docs) => {
+	try {
 
-		if (err) throw err
+		let mongoData = req.files.map(file => {
 
-		res.writeHead(200,{'content-type':'application/json'});	
+			const {originalname,size,mimetype} = file;
 
-		res.end(JSON.stringify(docs));
+			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname}),
 
-	});
+			src = `${process.env.BASE_IMG_URL}/${originalname}.${mimetype}`;
+
+			return {name:originalname,size,type:mimetype,url}
+			
+		});
+
+		conn.insertMany(mongoData,err => {
+
+			if (err) throw err;
+
+			res.sendStatus(201);
+
+		})
+
+	}
+
+	catch (err) {
+
+		res.sendStatus(409);
+
+	}
 
 });
 
-app.post('/',(req,res,next) => {
-
-	try {for (let image of req.body) conn.create(image,err => {if (err) throw err})}
-
-	catch(err) {console.log(err)}
-
-	res.sendStatus(200);
-
-});
-
-app.delete('/',(req,res,next) => {
+app.delete('/Delete',(req,res,next) => {
 
 	try {
 
@@ -220,81 +230,17 @@ app.delete('/',(req,res,next) => {
 
 			if(err) throw err;
 
-			const response = {
-
-				err:false,
-
-			}
-
-			delete req.body._id;
-
-			trashConn.create(req.body,err => {if (err) throw err});
-
-			res.writeHead(200,{'content-type':'application/json'});
-
-			res.end(JSON.stringify(response));
+			res.sendStatus(202)
 
 		});
 
 	}
 
-	catch(err) { console.log(err);}
+	catch(err) {
 
-});
 
-app.delete('/Papelera',(req,res,next) => {
-
-	try {
-
-		trashConn.findOneAndDelete({_id:req.body._id}).exec((err) => {
-
-			if(err) throw err;
-
-			const response = {
-
-				err:false,
-
-			}
-
-			res.writeHead(200,{'content-type':'application/json'});
-
-			res.end(JSON.stringify(response));
-
-		});
 
 	}
-
-	catch (err) {console.log(err);}
-
-});
-
-app.delete('/restore',(req,res,next) => {
-
-	try {
-
-		trashConn.findOneAndDelete({_id:req.body._id}).exec(err => {
-
-			if(err) throw err;
-
-			const response = {
-
-				err:false,
-
-			}
-
-			delete req.body._id
-
-			conn.create(req.body,err => {if (err) throw err});
-
-			res.writeHead(200,{'content-type':'application/json'});
-
-			res.end(JSON.stringify(response));
-
-		});
-
-	}
-
-	catch (err) { console.log(err);}
 
 });
 

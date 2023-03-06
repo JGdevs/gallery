@@ -1,10 +1,15 @@
-const UploadForm = ({setFiles}) => {
+const UploadForm = ({formRef,setFiles}) => {
 
-	const change = (e) => setFiles(Array.from(e.target.files));
+	const change = (e) => {
+
+		formRef.current.classList.add('invisible');
+		setFiles(Array.from(e.target.files));
+
+	}
 
 	return (
 
-		<section className="upload-form">
+		<form className="upload-form" ref={formRef} encType="multipart/form-data">
 			
 			<label className="button" htmlFor="file" >
 				
@@ -13,9 +18,17 @@ const UploadForm = ({setFiles}) => {
 
 			</label>
 			
-			<input className="invisible" id="file" type="file" multiple onChange={change}/>
+			<input 
+				className="invisible" 
+				id="file" 
+				type="file" 
+				name="images" 
+				accept="image/*" 
+				multiple 
+				onChange={change}
+			/>
 
-		</section>
+		</form>
 
 	);
 

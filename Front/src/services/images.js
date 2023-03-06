@@ -93,25 +93,26 @@ export async function searchImages(filter,search) {
 
 }
 
-export async function saveImages(images) {
+export async function saveImages(form) {
 	
 	try {
 
+		const formData = new FormData(form);
+
 		let options = {
 
-			body:images,
-			headers:{"content-type":"application/json"}
+			body:formData,
 
 		}
 
-		const res = await api.post('',options);
+		const res = await api.post('/Upload',options);
 		return res;
 
 	}
 
-	catch {
+	catch (err) {
 
-		console.log(res);
+		console.log(err);
 
 	}
 

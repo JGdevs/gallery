@@ -16,9 +16,10 @@
   "author": "Mongito",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "aws-client-s3": "^1.4.5",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",
-    "mongoose": "^6.3.0"
+    "mongoose": "^6.3.0",
+    "multer": "^1.4.5-lts.1"
   }
 }

@@ -6,21 +6,11 @@ export const HelpHttp = (baseURL) => {
 
 		if (typeof endpoint !== 'string') throw new Error(`excepected a URL but got ${typeof endpoint}`);
 
-		const defaultHeaders = {
-
-			accept: "application/json",
-
-		}
-
 		const controller = new AbortController();
 
 		options.signal = controller.signal;
 
 		options.method = options.method || "GET";
-
-		options.headers = options.headers ? {...defaultHeaders,...options.headers} : defaultHeaders;
-
-		options.body = JSON.stringify(options.body) || false;
 
 		if(!options.body) delete options.body;
 
