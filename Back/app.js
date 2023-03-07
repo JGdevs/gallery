@@ -206,7 +206,11 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 			
 		});
 
+		console.log('upload file end');
+
 		conn.insertMany(mongoData,err => {
+
+			console.log('insert documents in database');
 
 			if (err) throw err;
 
