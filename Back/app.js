@@ -196,7 +196,7 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
 			const {originalname,size,mimetype} = file,
 
-			src = `${process.env.BASE_IMG_URL}/${originalname}.${mimetype}`;
+			src = `${process.env.BASE_IMG_URL}/${originalname}`;
 
 			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname});
 
