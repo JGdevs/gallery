@@ -194,11 +194,11 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
 		let mongoData = req.files.map(file => {
 
-			const {originalname,size,mimetype} = file;
-
-			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname}),
+			const {originalname,size,mimetype} = file,
 
 			src = `${process.env.BASE_IMG_URL}/${originalname}.${mimetype}`;
+
+			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname});
 
 			return {name:originalname,size,type:mimetype,url}
 			
