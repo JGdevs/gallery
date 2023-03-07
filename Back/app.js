@@ -190,6 +190,8 @@ app.get('/infinite/:n',(req,res,next) => {
 
 app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
+	console.log('upload file');
+
 	try {
 
 		let mongoData = req.files.map(file => {
@@ -200,7 +202,7 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
 			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname});
 
-			return {name:originalname,size,type:mimetype,url}
+			return {name:originalname,size,type:mimetype,src}
 			
 		});
 
