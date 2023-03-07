@@ -112,7 +112,7 @@ const Gallery = () => {
 
 			{(imageModal === 0 || imageModal) && <ImageModal images={images}/>}
 
-			{images && images.length == 0 && <Void origin="gallery"/>}
+			{images && images.length == 0 && <Void/>}
 
 			{conf.typeLoad === 'pagination' &&
 

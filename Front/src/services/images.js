@@ -15,68 +15,17 @@ export async function getImages (url) {
 
 }
 
-export async function deleteImage (image) {
+export async function deleteImage (id) {
 
 	try {
 
-		image.DeleteDate = new Date().toLocaleString();
-
-		let options = {
-	
-			body:image,
-			headers:{"content-type":"application/json"}
-	
-		}
-
-		const res = await api.del('',options);
-
-		console.log(res);
+		const res = await api.del(`/Delete/${id}`);
 
 		return res;
 
 	}
 
 	catch (err) {console.log(err)}
-
-}
-
-export async function eraseImage (image) {
-
-	try {
-
-		let options = {
-
-			body:image,
-			headers:{"content-type":"application/json"}
-		
-		}
-
-		const res = await api.del('/Papelera',options);
-		return res;
-
-	}
-
-	catch (err) {console.log(err)}
-
-}
-
-export async function restoreImage (image) {
-
-	try {
-
-		let options = {
-	
-			body:image,
-			headers:{"content-type":"application/json"}
-	
-		}
-
-		const res = await api.del('/restore');
-		return res;
-
-	}
-
-	catch(err) {console.log(err)}
 
 }
 
@@ -113,23 +62,6 @@ export async function saveImages(form) {
 	catch (err) {
 
 		console.log(err);
-
-	}
-
-}
-
-export async function getAllTrash(image) {
-	
-	try {
-
-		const res = api.get('/Papelera');
-		return res;
-
-	}
-
-	catch (err) {
-
-		console.log(err)
 
 	}
 

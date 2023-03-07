@@ -3,14 +3,14 @@ import {useLocation,useNavigate} from 'react-router-dom';
 import useModals from '../context/ModalContext';
 import useImages from '../context/ImagesContext';
 import DetailsModal from './DetailsModal';
-import {deleteImage,eraseImage,restoreImage} from '../services/images';
+import {deleteImage} from '../services/images';
 import styles from '../styles/ImageModal.module.css';
 
 const ImageModal = ({origin}) => {
 
 	const {imageModal,setImageModal} = useModals(),
 
-	{setImages,setTrash,getImage,getTrash} = useImages(),
+	{setImages,getImage} = useImages(),
 
 	location = useLocation().pathname,
 
@@ -18,7 +18,7 @@ const ImageModal = ({origin}) => {
 
 	[details,setDetails] = useState(false),
 
-	image = (origin === "trash") ? getTrash(position) : getImage(position),
+	image = getImage(position),
 
 	nav = useNavigate();
 
@@ -44,74 +44,25 @@ const ImageModal = ({origin}) => {
 
 	}
 
-	function Restore (image) {
+	function Delete (id) {
 
-		restoreImage(image).then(res => {
+		let confirm = window.confirm('la imagen se movera a la papelera');
+
+		if(!confirm) return;
+
+		deleteImage(id).then(res => {
 
 			if(!res.err) {
-
-				delete image.deleteDate;
+		
+				setImages(prevState => prevState.filter((img) => img._id != image._id));
 
 				setImageModal(null);
-
-				setTrash(prevTrash => prevTrash.filter(img => img._id !== image._id));
-
-				setImages(prevImages => [...prevImages,image]);
 
 			}
 
 			else console.log(res.err);
 
 		})
-	}
-
-	function DeleteOf (image) {
-
-		if(location === "/Trash") {
-
-			let confirm = window.confirm('la imagen se borrara de forma permanente');
-
-			if(!confirm) return;
-
-			eraseImage(image).then(res => {
-
-				if(!res.err) {
-
-					setTrash(prevTrash => prevTrash.filter((img) => img._id != image._id));
-
-					setImageModal(null);
-
-				}
-		
-				else console.log('ocurrio un error al intentar borrar la imagen');
-
-			});
-			
-		}
-
-		else {
-
-			let confirm = window.confirm('la imagen se movera a la papelera');
-
-			if(!confirm) return;
-
-			deleteImage(image).then(res => {
-
-				if(!res.err) {
-			
-					setImages(prevState => prevState.filter((img) => img._id != image._id));
-
-					setTrash(prevTrash => [...prevTrash,image]);
-
-					setImageModal(null);
-
-				}
-
-				else console.log(res.err);
-
-			})
-
-		}
 
 	}
 
@@ -137,35 +88,16 @@ const ImageModal = ({origin}) => {
 
 				</div>
 
-				<div className={styles.modalOption} onClick={(location === "/Trash") ? () => {Restore(image)} : () => {Edit()}}>
-					
-					{
+				<div className={styles.modalOption} onClick={() => {Edit()}}>
 
-						(location === "/Trash") 
-
-						? <>
-							
-								<i className="bi-reply-fill fs-2"></i> 
-
-								<span>Restaurar</span> 
-
-							</>
-
-
-						: <>
-
-							<i className="bi-pencil fs-2"></i> <span>Editar</span>
-
-							</>
-
-					}
+						<i className="bi-pencil fs-2"></i> 
+						<span>Editar</span>
 
 				</div>
 
-				<div className={styles.modalOption} onClick={() => DeleteOf(image)}>
+				<div className={styles.modalOption} onClick={() => Delete(image._id)}>
 
 					<i className="bi-trash fs-2"></i>
-
 					<span>Borrar</span>
 
 				</div>

@@ -19,7 +19,6 @@ const DropDown = () => {
 				
 				<ul className={`${styles.dropdownMenu} child-bg-${conf.theme}`}>
 					
-					<NavLink to="/Trash">Trash</NavLink>
 					<NavLink to="/Configurations">Configurations</NavLink>
 
 				</ul>

@@ -10,8 +10,6 @@ ImagesProvider = ({children}) => {
 
 	const [images,setImages] = useState(null),
 
-	[trash,setTrash] = useState(null),
-
 	[hasMore,setHasMore] = useState(false),
 
 	{conf} = useConf(),
@@ -24,12 +22,9 @@ ImagesProvider = ({children}) => {
 
 		images,
 		setImages,
-		trash,
-		setTrash,
 		hasMore,
 		setHasMore,
 		getImage,
-		getTrash
 
 	}
 

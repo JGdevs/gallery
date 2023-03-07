@@ -171,7 +171,6 @@ const PhotoEditor = () => {
 		const newImg = {
 
 			...originalImg,
-			CreateDate:new Date().toLocaleString(),
 			name:`${originalImg.name}-edit`,
 			src:canvas.toDataURL(`image/${originalImg.type}`),
 

@@ -5,7 +5,6 @@ import Header from './Header';
 import Gallery from './Gallery';
 import NewImages from './NewImages';
 import SearchResult from './SearchResult';
-import Trash from './Trash';
 import Configurations from './Configurations';
 import PhotoEditor from './PhotoEditor';
 
@@ -45,9 +44,7 @@ const GalleryApp = () => {
 
 		    		<Route path="/Search/:filter/:search" element={<SearchResult/>}/>
 
-						<Route path="/Configurations" element={<Configurations/>}/>			    		
-
-		    		<Route path="/Trash" element={<Trash/>}/>
+						<Route path="/Configurations" element={<Configurations/>}/>
 
 		    		<Route path="/Edit/:position" element={<PhotoEditor/>}/>
 

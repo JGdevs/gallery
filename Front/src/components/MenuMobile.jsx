@@ -19,7 +19,6 @@ const MenuMobile = ({menuRef,handlerMenu}) => {
 				
 				<NavLink className={`text-${conf.theme}`} to="/Upload" onClick={handlerMenu}>Upload Images</NavLink>
 				<div onClick={() => setSearchModal(true)}>Search</div>
-				<NavLink className={`text-${conf.theme}`} to="/Trash" onClick={handlerMenu}>Trash</NavLink>
 				<NavLink className={`text-${conf.theme}`} to="/Configurations" onClick={handlerMenu}>Configurations</NavLink>
 
 			</nav>

@@ -222,7 +222,7 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
 });
 
-app.delete('/Delete',(req,res,next) => {
+app.delete('/Delete/:id',(req,res,next) => {
 
 	try {
 
