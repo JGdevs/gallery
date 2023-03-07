@@ -55,7 +55,7 @@ const Header = () => {
 
 			<section className={styles.headerOptions}>
 				
-				<NavLink className="mr-rg-2" to="/Configurations">Configurations</NavLink>
+				<NavLink className="mr-rg-2 in-mobile" to="/Configurations">Configurations</NavLink>
 
 				<div className="in-mobile" onClick={handlerSearch}>Search</div>
 

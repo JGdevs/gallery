@@ -216,6 +216,7 @@ app.post('/Upload',upload.any('images'), async (req,res,next) => {
 
 	catch (err) {
 
+		console.log(err);
 		res.sendStatus(409);
 
 	}
