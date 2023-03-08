@@ -229,7 +229,7 @@ app.delete('/Delete/:id',(req,res,next) => {
 
 	try {
 
-		conn.findOneAndDelete({_id:req.body._id}).exec((err,doc) => {
+		conn.findOneAndDelete({_id:id}).exec((err,doc) => {
 
 			if(err) throw err;
 
