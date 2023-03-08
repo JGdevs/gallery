@@ -5,9 +5,18 @@ const DetailsModal = ({image,close}) => {
 
 	let {conf} = useConf(),
 
-	{CreateDate,name,size,type} = image,
+	{createDate,name,size,type} = image,
 
 	extend = (size > 1000000) ? 'MB' : 'KB';
+
+	type = type.slice(indexOf('/'));
+
+	createDate = new Intl.DateTimeFormat("es-ES",{
+
+  	dateStyle: "short",
+  	timeStyle: "short"
+
+	}).format(createDate);
 
 	size = (size > 1000000) ? Math.round((size/1024) / 1024).toString().substring(0,3) : Math.round(size/1024);
 
@@ -23,28 +32,28 @@ const DetailsModal = ({image,close}) => {
 
 			<section className={styles.detailsField}>
 
-				<label>Nombre:</label>
+				<label>Name:</label>
 				<span>{name}</span>
 
 			</section>
 
 			<section className={styles.detailsField}>
 
-				<label>fecha de creacion:</label>
+				<label>Create Date:</label>
 				<span>{CreateDate}</span>
 
 			</section>
 
 			<section className={styles.detailsField}>
 
-				<label>Tamanio:</label>
+				<label>Size:</label>
 				<span>{`${size} ${extend}`}</span>
 
 			</section>
 
 			<section className={styles.detailsField}>
 
-					<label>Tipo de imagen:</label>
+					<label>Type:</label>
 				<span>{type}</span>
 
 			</section>

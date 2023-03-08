@@ -37,17 +37,17 @@ const Configurations = () => {
 
 		<article className={styles.configurations}>
 				
-				<h2>Configuraciones</h2>
+				<h2>Configurations</h2>
 
 				<section>
 
-					<h3>Opciones de carga</h3>
+					<h3>Charge options</h3>
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 
 						<li className={styles.confOption} onClick={() => setOption({option:options.typeLoad,action:TYPES.changeTypeLoad})}>
 
-							<span>Tipo de carga</span>
+							<span>Type of load</span>
 
 							<i></i>
 
@@ -59,13 +59,13 @@ const Configurations = () => {
 
 				<section>
 				
-					<h3>Apariencia</h3>
+					<h3>Appearance</h3>
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 						
 						<li className={styles.confOption} onClick={() => setOption({option:options.borderImgs,action:TYPES.changeBorderImages})}>
 
-							<span>Borde de las imagenes</span>
+							<span>Border</span>
 
 							<i></i>
 
@@ -73,7 +73,7 @@ const Configurations = () => {
 
 						<li className={styles.confOption} onClick={() => setOption({option:options.theme,action:TYPES.changeTheme})}>
 
-							<span>Tema</span>
+							<span>Theme</span>
 
 							<i></i>
 
@@ -81,7 +81,7 @@ const Configurations = () => {
 
 						<li className={styles.confOption} onClick={() => setOption({option:options.gridStyle,action:TYPES.changeGridStyle})}>
 
-							<span>Estilo de la galeria</span>
+							<span>Gallery style</span>
 
 							<i></i>
 

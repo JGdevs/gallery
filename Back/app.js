@@ -188,13 +188,15 @@ app.get('/infinite/:n',(req,res,next) => {
 
 });
 
-app.post('/Upload',upload.any('images'), async (req,res,next) => {
+app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 	try {
 
 		let mongoData = req.files.map(file => {
 
 			const {originalname,size,mimetype} = file,
+
+			type = mimetype.slice(indexOf('/')),
 
 			src = `${process.env.BASE_IMG_URL}/${originalname}`;
 
@@ -227,11 +229,20 @@ app.delete('/Delete/:id',(req,res,next) => {
 
 	try {
 
-		conn.findOneAndDelete({_id:req.body._id}).exec((err) => {
+		conn.findOneAndDelete({_id:req.body._id}).exec((err,doc) => {
 
 			if(err) throw err;
 
-			res.sendStatus(202)
+			client.deleteFile({
+
+				bucket:process.env.BUCKET_NAME,
+				key:doc.name
+
+			}).then(result => {
+
+				res.sendStatus(204);
+
+			})
 
 		});
 
@@ -239,7 +250,8 @@ app.delete('/Delete/:id',(req,res,next) => {
 
 	catch(err) {
 
-
+		console.log(err);
+		res.sendStatus(409);
 
 	}
 

@@ -14,7 +14,7 @@ const UploadForm = ({formRef,setFiles}) => {
 			<label className="button" htmlFor="file" >
 				
 				<p>Haz click para subir imagenes</p>
-				<i className="bi-camera fs-3 text-main-color"></i>		
+				<i className="bi-camera fs-3"></i>		
 
 			</label>
 			

@@ -52,7 +52,7 @@ const NewImages = () => {
 
 		<article>
 			
-			{files && <label className="button in-desktop fs--1" htmlFor="save">Save images</label>}
+			{files && <label className="button-mobile in-desktop fs--1" htmlFor="save">Save images</label>}
 
 			<section className="normal">
 				
@@ -64,7 +64,7 @@ const NewImages = () => {
 
 				{modal && 
 
-					<div className={`${styles.modal} animation-none bg-modal`}>
+					<div className={`${styles.modal} animation-none bg-modal fs-1`}>
 						
 						<p>{`${modal} ${modal > 1 ? 'images' : 'image'} have been saved`} </p>
 
