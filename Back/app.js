@@ -227,6 +227,8 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 app.delete('/Delete/:id',(req,res,next) => {
 
+	const {id} = req.params;
+
 	try {
 
 		conn.findOneAndDelete({_id:id}).exec((err,doc) => {
