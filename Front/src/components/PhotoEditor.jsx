@@ -191,7 +191,7 @@ const PhotoEditor = () => {
 
 				{ 
 
-					(image) ? <img className={styles.image} crossOrigin="anonymous" src={image.src} style={getImageStyle()} ref={imgRef}/> 
+					(image) ? <img className={styles.image} src={image.src} style={getImageStyle()} ref={imgRef}/> 
 
 					: <Loader/>
 

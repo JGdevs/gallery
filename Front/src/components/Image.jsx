@@ -55,7 +55,7 @@ const Image = ({image,pos = false}) => {
 
 		<div className={`image ${conf.borderImgs} ${source == null ? 'placeholder' : ''}`} ref={imageRef} onClick={HandlerClick}>
 			
-			{source && <img className={`${conf.borderImgs}`} src={source}/>}
+			{source && <img className={`${conf.borderImgs}`} crossOrigin="anonymous" src={source}/>}
 
 		</div>
 
