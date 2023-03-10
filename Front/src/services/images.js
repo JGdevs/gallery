@@ -66,3 +66,27 @@ export async function saveImages(form) {
 	}
 
 }
+
+export async function saveEdit(image) {
+	
+	try {
+
+		const body = JSON.stringify(image);
+
+		console.log(body);
+
+		const options = {
+
+			headers:{'content-type':'application/json'},
+			body
+
+		},
+
+		res = await api.post('/Edit',options);
+		return res;
+
+	}
+
+	catch (err) {console.log(err);}
+
+}

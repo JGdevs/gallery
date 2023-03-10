@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useLocation,useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import useModals from '../context/ModalContext';
 import useImages from '../context/ImagesContext';
 import DetailsModal from './DetailsModal';
@@ -10,9 +10,7 @@ const ImageModal = ({origin}) => {
 
 	const {imageModal,setImageModal} = useModals(),
 
-	{setImages,getImage} = useImages(),
-
-	location = useLocation().pathname,
+	{setImages,getImage,totalImages} = useImages(),
 
 	[position,setPos] = useState(imageModal),
 
@@ -24,14 +22,14 @@ const ImageModal = ({origin}) => {
 
 	function previous () {
 
-		if(position === 0) return false;
+		if(position === 0) return;
 		setPos(prevPosition => prevPosition - 1);
 
 	}
 
 	function next () {
 
-		if(position + 1 == images.length) return false;
+		if(position + 1 === totalImages) return;
 		setPos(prevPosition => prevPosition + 1);
 
 	}
@@ -70,13 +68,13 @@ const ImageModal = ({origin}) => {
 
 		<div className={styles.modalImgContainer}>
 
-			<i className="bi-caret-left-fill fs-3 before" onClick={previous}></i>
+			<i className="bi-caret-left-fill fs-3 before in-mobile" onClick={previous}></i>
 
 			<img className={styles.imageModal} src={image.src}/>
 
-			<i className="bi-x fs-3 close" onClick={() => setImageModal(null)}></i>
+			<i className="bi-x fs-3 close in-mobile" onClick={() => setImageModal(null)}></i>
 
-			<i className="bi-caret-right-fill fs-3 after" onClick={next}></i>
+			<i className="bi-caret-right-fill fs-3 after in-mobile" onClick={next}></i>
 
 			<nav className={styles.modalOptions}>
 				

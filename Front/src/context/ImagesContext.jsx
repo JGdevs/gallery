@@ -18,6 +18,8 @@ ImagesProvider = ({children}) => {
 
 	getTrash = (index) => trash[index],
 
+	totalImages = (images) ? images.length : 0,
+
 	data = {
 
 		images,
@@ -25,6 +27,7 @@ ImagesProvider = ({children}) => {
 		hasMore,
 		setHasMore,
 		getImage,
+		totalImages
 
 	}
 

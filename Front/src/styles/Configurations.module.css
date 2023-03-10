@@ -21,6 +21,7 @@
 
 .confOption:hover {
 
+	color: #fff;
 	background-color: var(--second-color);
 
 }

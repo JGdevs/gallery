@@ -41,7 +41,7 @@ const Configurations = () => {
 
 				<section>
 
-					<h3>Charge options</h3>
+					<h3 className="mr-lf">Charge options</h3>
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 
@@ -59,7 +59,7 @@ const Configurations = () => {
 
 				<section>
 				
-					<h3>Appearance</h3>
+					<h3 className="mr-lf">Appearance</h3>
 
 					<ul className={`${styles.confSection} child-bg-${conf.theme}`}>
 						

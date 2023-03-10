@@ -1,7 +1,7 @@
 import {useState,useRef,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import {saveEdit} from '../services/images';
 import useImages from '../context/ImagesContext';
-import {saveImages} from '../services/images';
 import SidebarItem from './SidebarItem';
 import Slider from './Slider';
 import Loader from './Loader';
@@ -176,12 +176,9 @@ const PhotoEditor = () => {
 
 		}
 
-		delete newImg._id;
-
-		saveImages([newImg]).then(res => {
+		saveEdit(newImg).then(res => {
 
 			if(!res.err) window.alert('image save successfully');
-
 			else console.log(res.err);
 
 		})

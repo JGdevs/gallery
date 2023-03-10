@@ -12,6 +12,8 @@ multer = require('multer'),
 
 AWSClientS3 = require("aws-client-s3"),
 
+{Buffer} = require('buffer'),
+
 port = (process.env.PORT || 4069),
 
 //conectandose con mongo
@@ -56,6 +58,8 @@ const client = new AWSClientS3(config);
 const app = express();
 
 app.set('port',port);
+
+app.use(express.json({limit:'10mb'}));
 
 app.use((req,res,next) => {
 
@@ -224,6 +228,29 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 	}
 
 });
+
+app.post('/Edit',(req,res,next) => {
+
+	try {
+
+		const {name,type,size,src} = req.body;
+
+		const img  = new Buffer.from(src,'base64');
+
+		console.log(img);
+
+		res.sendStatus(201);
+
+	}
+
+	catch (err) {
+
+		console.log(err);
+		res.sendStatus(409);
+
+	}
+
+})
 
 app.delete('/Delete/:id',(req,res,next) => {
 
