@@ -233,13 +233,21 @@ app.post('/Edit',(req,res,next) => {
 
 	try {
 
-		const {name,type,size,src} = req.body;
+		let {name,type,size,src} = req.body;
+		
+		const file = new Buffer.from(src,'base64');
 
-		const img  = new Buffer.from(src,'base64');
+		src = `${process.env.BASE_IMG_URL}/${name}`;
 
-		console.log(img);
+		client.uploadFile(file,{bucket:process.env.BUCKET_NAME,key:name}).then(result => {
 
-		res.sendStatus(201);
+			conn.create({name,type,size,src},() => {
+
+				res.sendStatus(201);
+
+			});
+
+		});
 
 	}
 
