@@ -171,7 +171,7 @@ const PhotoEditor = () => {
 		const newImg = {
 
 			...originalImg,
-			name:`${originalImg.name}-edit`,
+			name:`${originalImg.name}-edit.${originalImg.type}`,
 			src:canvas.toDataURL(`image/${originalImg.type}`),
 
 		}
