@@ -17,8 +17,6 @@ const PhotoEditor = () => {
 
 	imgRef = useRef(),
 
-	drawRef = useRef(),
-
 	Default_Options = [
 
 		{

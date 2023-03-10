@@ -73,8 +73,6 @@ export async function saveEdit(image) {
 
 		const body = JSON.stringify(image);
 
-		console.log(body);
-
 		const options = {
 
 			headers:{'content-type':'application/json'},

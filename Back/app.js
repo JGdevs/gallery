@@ -200,7 +200,7 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 			const {originalname,size,mimetype} = file,
 
-			type = mimetype.slice(indexOf('/')),
+			type = mimetype.slice(mimetype.indexOf('/')),
 
 			src = `${process.env.BASE_IMG_URL}/${originalname}`;
 
