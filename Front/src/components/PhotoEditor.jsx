@@ -154,6 +154,8 @@ const PhotoEditor = () => {
 
 	function saveEditImage (editImg,originalImg) {
 
+		editImg.crossOrigin = "anonymous";
+
 		const canvas = document.createElement('canvas'),
 
 		ctx = canvas.getContext('2d');
