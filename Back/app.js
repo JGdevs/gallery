@@ -198,7 +198,7 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 		let mongoData = req.files.map(file => {
 
-			const {originalname,size,mimetype} = file,
+			let {originalname,size,mimetype} = file,
 
 			type = mimetype.slice(mimetype.indexOf('/')),
 
