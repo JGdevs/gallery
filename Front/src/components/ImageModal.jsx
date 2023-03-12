@@ -64,7 +64,7 @@ const ImageModal = ({origin}) => {
 
 	}
 
-	return(
+	return (
 
 		<div className={styles.modalImgContainer}>
 

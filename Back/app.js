@@ -210,11 +210,12 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 			
 		});
 
-		conn.insertMany(mongoData,err => {
+		conn.insertMany(mongoData,(err,docs) => {
 
 			if (err) throw err;
 
-			res.sendStatus(201);
+			res.writeHead(201,{'content-type':'application/json'});
+			res.end(JSON.stringify(docs));
 
 		})
 
@@ -241,9 +242,10 @@ app.post('/Edit',(req,res,next) => {
 
 		client.uploadFile(file,{bucket:process.env.BUCKET_NAME,key:name}).then(result => {
 
-			conn.create({name,type,size,src},() => {
+			conn.create({name,type,size,src},(err,doc) => {
 
-				res.sendStatus(201);
+				res.writeHead(201,{'content-type':'application/json'});
+				res.end(JSON.stringify(doc));
 
 			});
 

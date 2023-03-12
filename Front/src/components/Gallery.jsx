@@ -84,7 +84,9 @@ const Gallery = () => {
 
 			},{threshold:1});
 
-			observer.observe(document.querySelector(`.${conf.gridStyle}`).lastElementChild);
+			const child = document.querySelector(`.${conf.gridStyle}`).lastElementChild;
+
+			if (child) observer.observe(child);
 
 		}
 

@@ -7,19 +7,19 @@ function App() {
 
   return (
 
-    <BrowserRouter>
+    <ConfProvider>
 
-      <ConfProvider>
+      <ImagesProvider>
 
-        <ImagesProvider>
+        <BrowserRouter>
 
          <GalleryApp/>
 
-        </ImagesProvider> 
+        </BrowserRouter> 
 
-      </ConfProvider>
+      </ImagesProvider>
 
-    </BrowserRouter>
+    </ConfProvider>
 
   );
 
