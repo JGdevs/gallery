@@ -9,7 +9,7 @@ const DetailsModal = ({image,close}) => {
 
 	extend = (size > 1000000) ? 'MB' : 'KB';
 
-	type = type.slice(indexOf('/'));
+	type = type.slice(type.indexOf('/'));
 
 	createDate = new Intl.DateTimeFormat("es-ES",{
 
