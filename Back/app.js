@@ -22,7 +22,7 @@ Schema = mongoose.Schema,
 
 ImagesSchema = new Schema ({
 
-	createDate:{type:'Date',default:Date.now},
+	createDate:'date',
 	name:'string',
 	src:'string',
 	size:'number',
@@ -200,13 +200,20 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 			let {originalname,size,mimetype} = file,
 
+			createDate = new Intl.DateTimeFormat("es-ES",{
+
+  			dateStyle: "short",
+  			timeStyle: "short"
+
+			}).format(new Date());
+
 			type = mimetype.slice(mimetype.indexOf('/')),
 
 			src = `${process.env.BASE_IMG_URL}/${originalname}`;
 
 			client.uploadFile(file.buffer,{bucket:process.env.BUCKET_NAME,key:originalname});
 
-			return {name:originalname,size,type:mimetype,src}
+			return {name:originalname,size,type:mimetype,src,createDate}
 			
 		});
 

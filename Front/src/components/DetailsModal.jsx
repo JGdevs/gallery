@@ -11,13 +11,6 @@ const DetailsModal = ({image,close}) => {
 
 	type = type.slice(type.indexOf('/'));
 
-	createDate = new Intl.DateTimeFormat("es-ES",{
-
-  	dateStyle: "short",
-  	timeStyle: "short"
-
-	}).format(createDate);
-
 	size = (size > 1000000) ? Math.round((size/1024) / 1024).toString().substring(0,3) : Math.round(size/1024);
 
 	return(
