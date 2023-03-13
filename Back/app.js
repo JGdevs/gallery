@@ -205,7 +205,7 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
   			dateStyle: "short",
   			timeStyle: "short"
 
-			}).format(new Date());
+			}).format(new Date()),
 
 			type = mimetype.slice(mimetype.indexOf('/')),
 
