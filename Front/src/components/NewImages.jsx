@@ -36,7 +36,7 @@ const NewImages = () => {
 					},3000);
 
 					setModal(files.length);
-					setImages(prevImages => [...prevImages,...files]);
+					setImages(prevImages => [...prevImages,...res]);
 
 				}
 
