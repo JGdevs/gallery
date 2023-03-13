@@ -22,7 +22,7 @@ Schema = mongoose.Schema,
 
 ImagesSchema = new Schema ({
 
-	createDate:'date',
+	createDate:'string',
 	name:'string',
 	src:'string',
 	size:'number',
