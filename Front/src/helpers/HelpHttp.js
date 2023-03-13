@@ -6,8 +6,6 @@ export const HelpHttp = (baseURL) => {
 
 		if (typeof endpoint !== 'string') throw new Error(`excepected a URL but got ${typeof endpoint}`);
 
-		options.signal = controller.signal;
-
 		options.method = options.method || "GET";
 
 		if(!options.body) delete options.body;
