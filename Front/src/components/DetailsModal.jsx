@@ -33,7 +33,7 @@ const DetailsModal = ({image,close}) => {
 			<section className={styles.detailsField}>
 
 				<label>Create Date:</label>
-				<span>{CreateDate}</span>
+				<span>{createDate}</span>
 
 			</section>
 
