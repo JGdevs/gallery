@@ -16,7 +16,7 @@ AWSClientS3 = require("aws-client-s3"),
 
 port = (process.env.PORT || 4069),
 
-//conectandose con mongo
+//connecting to mongo
 
 Schema = mongoose.Schema,
 
@@ -36,12 +36,12 @@ mongoose.set("strictQuery", false);
 
 mongoose.connect(process.env.MONGO_URI);
 
-// configurando multer 
+// config multer 
 
 const storage = multer.memoryStorage(),
 upload = multer({storage});
 
-// configurando AWS S3 client 
+// config AWS S3 client 
 
 const config = {
 	region: process.env.BUCKET_REGION,
@@ -53,7 +53,11 @@ const config = {
 
 const client = new AWSClientS3(config);
 
-//configurando app
+//functions 
+
+const now = () => new Intl.DateTimeFormat("es-ES",{dateStyle: "short",timeStyle: "short"}).format(new Date());
+
+//config app
 
 const app = express();
 
@@ -200,14 +204,7 @@ app.post('/Upload',upload.any('images'),(req,res,next) => {
 
 			let {originalname,size,mimetype} = file,
 
-			createDate = new Intl.DateTimeFormat("es-ES",{
-
-  			dateStyle: "short",
-  			timeStyle: "short"
-
-			}).format(new Date()),
-
-			type = mimetype.slice(mimetype.indexOf('/')),
+			createDate = now(),
 
 			src = `${process.env.BASE_IMG_URL}/${originalname}`;
 
@@ -241,7 +238,9 @@ app.post('/Edit',(req,res,next) => {
 
 	try {
 
-		let {name,type,size,src} = req.body;
+		let {name,type,size,src,createDate} = req.body;
+
+		createDate = now();
 		
 		const file = new Buffer.from(src,'base64');
 

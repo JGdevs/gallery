@@ -9,7 +9,7 @@ const DetailsModal = ({image,close}) => {
 
 	extend = (size > 1000000) ? 'MB' : 'KB';
 
-	type = type.slice(type.indexOf('/'));
+	type = type.slice(type.indexOf('/') + 1);
 
 	size = (size > 1000000) ? Math.round((size/1024) / 1024).toString().substring(0,3) : Math.round(size/1024);
 

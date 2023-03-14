@@ -11,7 +11,7 @@ const PhotoEditor = () => {
 
 	let {position} = useParams();
 
-	const {getImage} = useImages(),
+	const {getImage,setImages} = useImages(),
 
 	image = getImage(position),
 
@@ -154,6 +154,10 @@ const PhotoEditor = () => {
 
 	function saveEditImage (editImg,originalImg) {
 
+		const save = window.confirm('save edit image?');
+
+		if (!save) return;
+
 		const canvas = document.createElement('canvas'),
 
 		ctx = canvas.getContext('2d');
@@ -174,9 +178,17 @@ const PhotoEditor = () => {
 
 		}
 
+		delete newImg._id;
+
 		saveEdit(newImg).then(res => {
 
-			if(!res.err) window.alert('image save successfully');
+			if(!res.err) {
+
+				window.alert('image save successfully');
+				setImages(prevImages => [...prevImages,res]);
+
+			}
+
 			else console.log(res.err);
 
 		})
