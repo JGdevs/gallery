@@ -2,8 +2,6 @@ import {useState,useRef,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {saveEdit} from '../services/images';
 import useImages from '../context/ImagesContext';
-import SidebarItem from './SidebarItem';
-import Slider from './Slider';
 import Loader from './Loader';
 import styles from '../styles/PhotoEditor.module.css';
 
@@ -197,39 +195,85 @@ const PhotoEditor = () => {
 
 	return (
 
-		<div className={styles.editorContainer}>
-			
-			<div className={styles.editorImage}>
+	<div className={styles.container}>
+  
+	  <div className={styles.wrapper}>
+	    
+	    <div className={styles.editorPanel}>
+	      
+	      <div className={styles.filter}>
+	        
+	        <label className={styles.filter}>Filters</label>
+	        <div className={styles.options}>
 
-				{ 
+	          <button className={styles.button} id="brightness">Brightness</button>
+	          <button className={styles.button} id="saturation">Saturation</button>
+	          <button className={styles.button} id="inversion">Inversion</button>
+	          <button className={styles.button} id="grayscale">Grayscale</button>
 
-					(image) ? <img className={styles.image} src={image.src} crossOrigin="anonymous" style={getImageStyle()} ref={imgRef}/> 
+	        </div>
 
-					: <Loader/>
+	      </div>
 
-				} 
+	      <div className={styles.slider}>
+	          
+	        <div className={styles.filterInfo}>
+	          
+	          <p className={styles.name}>Brightness</p>
+	          <p className={styles.value}>100%</p>
 
-			</div>
+	        </div>
 
-			<aside className={styles.editorAside}>
-				
-				<select className={styles.editorOptions} onChange={({target}) => setSelectedOptionIndex(parseInt(target.value))}>
-				
-					{options.map((option,index) => <SidebarItem key={index} name={option.name} index={index}/>)}
+	        <input 
 
-				</select>
+	        	className={styles.input}
+	        	type="range" 
+	        	value={selectedOption.value}
+	        	min={selectedOption.range.min} 
+	        	max={selectedOption.range.max}
+	        	onChange={handlerSliderChange}
 
-				<Slider min={selectedOption.range.min} max={selectedOption.range.max} value={selectedOption.value} handlerChange={handlerSliderChange}/> 
+	        />
 
-				<button className={styles.editorButton} onClick={() => saveEditImage(imgRef.current,image)}>guardar</button>
+	      </div>
 
-			</aside>
+	      <div className={styles.rotate}>
 
-		</div>
+	        <label className={styles.title}>Rotate & Flip</label>
+
+	        <div className={styles.options}>
+	          <button id="left"><i className="fa-solid fa-rotate-left"></i></button>
+	          <button id="right"><i className="fa-solid fa-rotate-right"></i></button>
+	          <button id="horizontal"><i className='bx bx-reflect-vertical'></i></button>
+	          <button id="vertical"><i className='bx bx-reflect-horizontal' ></i></button>
+	        </div>
+
+	      </div>
+
+	    </div>
+
+	    <div className={styles.img}>
+	      <img src={image?.src} alt={image?.name}/>
+	    </div>
+
+	  </div>
+
+	  <div className={styles.controls}>
+
+	    <button className={styles.resetFilter}>Reset Filters</button>
+
+	    <div className={styles.row}>
+	      <input className={styles.fileInput} type="file" accept="image/*" hidden/>
+	      <button className={`${styles.chooseImg} ${styles.button}`}>Choose Image</button>
+	      <button className={`${styles.saveImg} ${styles.button}`}>Save Image</button>
+	    </div>
+	    
+	  </div>
+
+</div>
 
 	)
 
 }
 
 export default PhotoEditor;
-

@@ -14,7 +14,7 @@ ImagesProvider = ({children}) => {
 
 	{conf} = useConf(),
 
-	getImage = (index) => images[index],
+	getImage = (index) => images?.[index],
 
 	getTrash = (index) => trash[index],
 
