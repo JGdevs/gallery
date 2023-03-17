@@ -174,7 +174,7 @@ const PhotoEditor = () => {
 
 			...originalImg,
 			name:`edit-${originalImg.name}`,
-			src:canvas.toDataURL(`image/${originalImg.type}`).split("base64,")[1],
+			src:canvas.toDataURL(`image/${originalImg.type}`,.5).split("base64,")[1],
 
 		}
 
