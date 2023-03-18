@@ -2,6 +2,7 @@ import {useState,useRef,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {saveEdit} from '../services/images';
 import useImages from '../context/ImagesContext';
+import useConf from '../context/ConfContext';
 import Loader from './Loader';
 import styles from '../styles/PhotoEditor.module.css';
 
@@ -14,6 +15,8 @@ const PhotoEditor = () => {
 	image = getImage(position),
 
 	imgRef = useRef(),
+
+	{conf} = useConf(),
 
 	Default_Options = [
 
@@ -195,7 +198,7 @@ const PhotoEditor = () => {
 
 	return (
 
-	<div className={styles.container}>
+	<div className={`${styles.container} child-bg-${conf.theme}`}>
   
 	  <div className={styles.wrapper}>
 	    
@@ -242,7 +245,7 @@ const PhotoEditor = () => {
 	        <label className={styles.title}>Rotate & Flip</label>
 
 	        <div className={styles.options}>
-	          <button id="left"><i className="fa-solid fa-rotate-left"></i></button>
+	          <button id="left"><i class="bi-arrow-clockwise"></i></button>
 	          <button id="right"><i className="fa-solid fa-rotate-right"></i></button>
 	          <button id="horizontal"><i className='bx bx-reflect-vertical'></i></button>
 	          <button id="vertical"><i className='bx bx-reflect-horizontal' ></i></button>
