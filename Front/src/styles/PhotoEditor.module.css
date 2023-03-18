@@ -1,6 +1,7 @@
 .container {
 
-  width: 53.125rem;
+  width: 95vw;
+  max-width: 53.125rem;
   margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -20,10 +21,10 @@
 
 .editorPanel {
 
-  padding: .9375rem .625rem;
+  padding: var(--space-xs) var(--space-2xs);
   width: 17.5rem;
   border-radius: .3125rem;
-  border: .0625rem solid #ccc;
+  border: .0625rem solid #f9f9f966;
 
 }
 
@@ -39,6 +40,7 @@
 .controls {
 
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
 
@@ -48,26 +50,22 @@
 
   padding: .5rem;
   font-size: var(--step--3);
-  color: #6C757D;
-  font-weight: bold;
+  color: #f9f9f9;
   border-radius: .1875rem;
-  border: .0625rem solid #aaa;
+  border: .0625rem solid #f9f9f966;
   outline: none;
   background-color: transparent;
 
 }
 
-.filter > button{width: calc(100% / 2 - .25rem);}
+.filter > .options {
 
-button:hover{}
-
-.filter > button.active{
-
-  color: #fff;
-  border-color: #5372F0;
-  
+  gap: .5rem 0;
+  margin-top: var(--space-3xs);
 
 }
+
+.filter > .options > button {width: calc(100% / 2 - .25rem);}
 
 .slider{margin-top: .75rem;}
 
@@ -90,20 +88,17 @@ button:hover{}
 
 .rotate{margin-top: 1.0625rem;}
 
-.rotate > button {
+.rotate > .options > button {
 
   display: flex;
   align-items: center;
   justify-content: center;
   width: calc(100% / 4 - .1875rem);
-
-}
-
-.options > button:active {
-
-  color: #fff;
-  
-  border-color: #5372F0;
+  padding: var(--space-3xs) 0;
+  font-size: var(--step--2);
+  color: #f9f9f9;
+  background-color: transparent;
+  border: .0625rem solid #f9f9f966;
 
 }
 
@@ -125,49 +120,20 @@ button:hover{}
   max-height: 20.9375rem;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-
-}
-
-.controls > button { 
-
-  padding: .6875rem 1.25rem;
-  font-size: .875rem;
-  border-radius: .1875rem;
-  outline: none;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
+  object-fit: cover;
 
 }
 
 .resetFilter {
 
-  color: #6C757D;
-  border: .0625rem solid #6C757D;
-
-}
-
- .resetFilter:hover {
-
-  color: #fff;
-  
-
-}
-
-.chooseImg {
-
-  
-  border: .0625rem solid #6C757D;
-
-}
-
-.saveImg {
-
-  margin-left: .3125rem;
-  
-  border: .0625rem solid #5372F0;
+  padding: .5rem;
+  color: #f9f9f9;
+  background-color: transparent;
+  border: thin solid #f9f9f966;
+  border-radius: .1875rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
 }
 
@@ -177,9 +143,14 @@ button:hover{}
   
   .wrapper{flex-wrap: wrap-reverse;}
 
-  .editorPanel{width: 100%;}
+  .editorPanel {
 
-  .previewImg {
+    width: 100%;
+    margin-top: var(--space-2xs);
+
+  }
+
+  .img {
 
     width: 100%;
     margin: 0 0 .9375rem;

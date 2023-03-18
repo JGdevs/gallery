@@ -104,21 +104,6 @@ const PhotoEditor = () => {
 
 			},
 			unit:'deg'
-		},
-
-
-		{
-
-			name:'Blur',
-			property:'blur',
-			value:0,
-			range:{
-
-				min:0,
-				max:200
-
-			},
-			unit:'px'
 		}
 
 	],
@@ -209,10 +194,22 @@ const PhotoEditor = () => {
 	        <label className={styles.filter}>Filters</label>
 	        <div className={styles.options}>
 
-	          <button className={styles.button} id="brightness">Brightness</button>
-	          <button className={styles.button} id="saturation">Saturation</button>
-	          <button className={styles.button} id="inversion">Inversion</button>
-	          <button className={styles.button} id="grayscale">Grayscale</button>
+	        	{
+
+	        		options.map((op,index) => (
+
+	        			<button 
+
+	        				key={op.name}
+	        				className={`${styles.button} ${(index === selectedOptionIndex) ? 'selected' : ''}`} 
+	        				id={op.property} 
+	        				onClick={({target}) => setSelectedOptionIndex(index)}>{op.name}
+
+	        			</button>
+
+	        		))
+
+	        	}
 
 	        </div>
 
@@ -222,8 +219,8 @@ const PhotoEditor = () => {
 	          
 	        <div className={styles.filterInfo}>
 	          
-	          <p className={styles.name}>Brightness</p>
-	          <p className={styles.value}>100%</p>
+	          <p className="fs--2">{selectedOption.name}</p>
+	          <p className="fs--2 mr-tp">{selectedOption.value}</p>
 
 	        </div>
 
@@ -245,10 +242,10 @@ const PhotoEditor = () => {
 	        <label className={styles.title}>Rotate & Flip</label>
 
 	        <div className={styles.options}>
-	          <button id="left"><i class="bi-arrow-clockwise"></i></button>
-	          <button id="right"><i className="fa-solid fa-rotate-right"></i></button>
-	          <button id="horizontal"><i className='bx bx-reflect-vertical'></i></button>
-	          <button id="vertical"><i className='bx bx-reflect-horizontal' ></i></button>
+	          <button id="left"><i className="bi-arrow-clockwise"></i></button>
+	          <button id="right"><i className="bi-arrow-counterclockwise"></i></button>
+	          <button id="horizontal"><i className="bi-arrows-collapse special"></i></button>
+	          <button id="vertical"><i className="bi-arrows-collapse"></i></button>
 	        </div>
 
 	      </div>
@@ -256,7 +253,7 @@ const PhotoEditor = () => {
 	    </div>
 
 	    <div className={styles.img}>
-	      <img src={image?.src} alt={image?.name}/>
+	      <img style={getImageStyle()} src={image?.src} alt={image?.name}/>
 	    </div>
 
 	  </div>
@@ -266,8 +263,6 @@ const PhotoEditor = () => {
 	    <button className={styles.resetFilter}>Reset Filters</button>
 
 	    <div className={styles.row}>
-	      <input className={styles.fileInput} type="file" accept="image/*" hidden/>
-	      <button className={`${styles.chooseImg} ${styles.button}`}>Choose Image</button>
 	      <button className={`${styles.saveImg} ${styles.button}`}>Save Image</button>
 	    </div>
 	    

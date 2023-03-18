@@ -323,6 +323,20 @@ label.button:hover {
 
 label[for="save"] {margin: 1rem auto;}
 
+.special {
+
+  transform: rotate(90deg);
+  margin-right: .25rem;
+
+}
+
+.selected {
+
+	background-color: var(--main-color);
+	border-color: var(--main-color);
+
+}
+
 /* icons */
 
 .bi-trash::before { content: "\f5de"; }
@@ -337,6 +351,9 @@ label[for="save"] {margin: 1rem auto;}
 .bi-trash2-fill::before { content: "\f5df"; }
 .bi-image::before { content: "\f42a"; }
 .bi-reply-fill::before { content: "\f51f"; }
+.bi-arrow-clockwise::before { content: "\f116"; }
+.bi-arrow-counterclockwise::before { content: "\f117"; }
+.bi-arrows-collapse::before { content: "\f14b"; }
 
 /* utility-class */
 
