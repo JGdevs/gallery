@@ -24,7 +24,7 @@
   padding: var(--space-xs) var(--space-2xs);
   width: 17.5rem;
   border-radius: .3125rem;
-  border: .0625rem solid #f9f9f966;
+  border: .0625rem solid;
 
 }
 
@@ -50,9 +50,9 @@
 
   padding: .5rem;
   font-size: var(--step--3);
-  color: #f9f9f9;
+  color: inherit;
   border-radius: .1875rem;
-  border: .0625rem solid #f9f9f966;
+  border: .0625rem solid;
   outline: none;
   background-color: transparent;
 
@@ -96,9 +96,9 @@
   width: calc(100% / 4 - .1875rem);
   padding: var(--space-3xs) 0;
   font-size: var(--step--2);
-  color: #f9f9f9;
+  color: inherit;
   background-color: transparent;
-  border: .0625rem solid #f9f9f966;
+  border: .0625rem solid;
 
 }
 
@@ -127,9 +127,9 @@
 .resetFilter {
 
   padding: .5rem;
-  color: #f9f9f9;
+  color: inherit;
   background-color: transparent;
-  border: thin solid #f9f9f966;
+  border: thin solid;
   border-radius: .1875rem;
   outline: none;
   cursor: pointer;

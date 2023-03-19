@@ -1,4 +1,4 @@
-import {useState,useRef,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {saveEdit} from '../services/images';
 import useImages from '../context/ImagesContext';
@@ -13,8 +13,6 @@ const PhotoEditor = () => {
 	const {getImage,setImages} = useImages(),
 
 	image = getImage(position),
-
-	imgRef = useRef(),
 
 	{conf} = useConf(),
 
@@ -104,7 +102,33 @@ const PhotoEditor = () => {
 
 			},
 			unit:'deg'
-		}
+		},
+
+		{
+	    name: 'Blur',
+	    property: 'blur',
+	    value: 0,
+	    range: {
+	      min: 0,
+	      max: 20
+	    },
+	    unit: 'px'
+  	},
+
+  	{
+
+  		name:'Invert',
+  		property:'invert',
+  		value:0,
+  		range:{
+
+  			min:0,
+  			max:100
+
+  		},
+  		unit:'%'
+
+  	}
 
 	],
 
@@ -114,7 +138,7 @@ const PhotoEditor = () => {
 		horizontal:1,
 		vertical:1
 
-	}
+	},
 
 	[options,setOptions] = useState(Default_Options),
 
@@ -144,16 +168,30 @@ const PhotoEditor = () => {
 
 		if(action === 'left') setOrientation(prevOr => {return{...prevOr,rotate:prevOr.rotate - 90}});
 		else if(action === 'right') setOrientation(prevOr => {return{...prevOr,rotate:prevOr.rotate + 90}});
-		else if(action === 'horizontal') setOrientation(prevOr => {return{...prevOr,horizontal:prevOr.-horizontal}});
-		else if(action === 'vertical') setOrientation(prevOr => {return{...prevOr,vertical:prevOr.-vertical}});
+		else if(action === 'horizontal') setOrientation(prevOr => {return{...prevOr,horizontal:-prevOr.horizontal}});
+		else if(action === 'vertical') setOrientation(prevOr => {return{...prevOr,vertical:-prevOr.vertical}});
 
 	}
 
 	function getImageStyle () {
 
-		const filters = options.map(option => `${option.property}(${option.value}${option.unit})`);
+		const filters = options.map(option => `${option.property}(${option.value}${option.unit})`),
 
-		return {filter: filters.join(' ')}
+		transform = `rotate(${orientation.rotate}deg) scale(${orientation.horizontal},${orientation.vertical})`;
+
+		return {
+
+			filter: filters.join(' '),
+			transform
+
+		}
+
+	}
+
+	function resetFilters () {
+
+		setOptions(Default_Options);
+		setOrientation(orientationOptions);
 
 	}
 
@@ -171,9 +209,15 @@ const PhotoEditor = () => {
 
 		canvas.height = editImg.naturalHeight;
 
+		ctx.translate(canvas.width / 2,canvas.height / 2);
+
+		if(rotate !== 0) ctx.rotate(orientation.rotate * Math.PI / 180);
+
+		ctx.scale(orientation.horizontal,orientation.vertical);
+
 		ctx.filter = editImg.style.filter;
 
-		ctx.drawImage(editImg,0,0);	
+		ctx.drawImage(editImg,-canvas.width / 2,-canvas.height / 2,canvas.width,canvas.height);	
 
 		const newImg = {
 
@@ -202,7 +246,7 @@ const PhotoEditor = () => {
 
 	return (
 
-	<div className={`${styles.container} child-bg-${conf.theme}`}>
+	<div className={`${styles.container} child-bg-${conf.theme} text-${conf.theme} border-${conf.theme}`}>
   
 	  <div className={styles.wrapper}>
 	    
@@ -279,7 +323,7 @@ const PhotoEditor = () => {
 
 	  <div className={styles.controls}>
 
-	    <button className={styles.resetFilter}>Reset Filters</button>
+	    <button className={styles.resetFilter} onClick={resetFilters}>Reset Filters</button>
 
 	    <div className={styles.row}>
 	      <button className={`${styles.saveImg} ${styles.button}`}>Save Image</button>

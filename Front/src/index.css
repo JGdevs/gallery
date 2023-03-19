@@ -365,6 +365,10 @@ label[for="save"] {margin: 1rem auto;}
 
 .text-light {color: var(--body-color-light);}
 
+.border-light {border-color: var(--body-color-light);}
+
+.border-dark {border-color: var(--body-color-dark);}
+
 .square {border-radius: 0;}
 
 .circle {border-radius: 1rem;}
