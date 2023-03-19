@@ -108,9 +108,19 @@ const PhotoEditor = () => {
 
 	],
 
+	orientationOptions = {
+
+		rotate:0,
+		horizontal:1,
+		vertical:1
+
+	}
+
 	[options,setOptions] = useState(Default_Options),
 
 	[selectedOptionIndex,setSelectedOptionIndex] = useState(0),
+
+	[orientation,setOrientation] = useState(orientationOptions),
 
 	selectedOption = options[selectedOptionIndex];
 
@@ -127,6 +137,15 @@ const PhotoEditor = () => {
 			})
 
 		})
+
+	}
+
+	function changeOrientation(action) {
+
+		if(action === 'left') setOrientation(prevOr => {return{...prevOr,rotate:prevOr.rotate - 90}});
+		else if(action === 'right') setOrientation(prevOr => {return{...prevOr,rotate:prevOr.rotate + 90}});
+		else if(action === 'horizontal') setOrientation(prevOr => {return{...prevOr,horizontal:prevOr.-horizontal}});
+		else if(action === 'vertical') setOrientation(prevOr => {return{...prevOr,vertical:prevOr.-vertical}});
 
 	}
 
@@ -242,10 +261,10 @@ const PhotoEditor = () => {
 	        <label className={styles.title}>Rotate & Flip</label>
 
 	        <div className={styles.options}>
-	          <button id="left"><i className="bi-arrow-clockwise"></i></button>
-	          <button id="right"><i className="bi-arrow-counterclockwise"></i></button>
-	          <button id="horizontal"><i className="bi-arrows-collapse special"></i></button>
-	          <button id="vertical"><i className="bi-arrows-collapse"></i></button>
+	          <button onClick={() => changeOrientation('left')}><i className="bi-arrow-clockwise"></i></button>
+	          <button onClick={() => changeOrientation('right')}><i className="bi-arrow-counterclockwise"></i></button>
+	          <button onClick={() => changeOrientation('horizontal')}><i className="bi-arrows-collapse special"></i></button>
+	          <button onClick={() => changeOrientation('vertical')}><i className="bi-arrows-collapse"></i></button>
 	        </div>
 
 	      </div>
